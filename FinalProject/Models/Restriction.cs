@@ -7,9 +7,9 @@ namespace FinalProject.Models
 {
     public class Restriction
     {
-        public Boolean noGapsBiggerThanOneHour { get; set; }
-        public Boolean mustHaveOneHourBreaks { get; set; }
-        public List<String> noProfessorX { get; set; }
-        public List<Timeslot> timeslots { get; set; }
+        public Boolean NoGapsBiggerThanOneHour { get; set; }
+        public Boolean MustHaveOneHourBreaks { get; set; }
+        public List<String> NoProfessorX { get; set; }
+        public List<Timeslot> Timeslots { get; set; }
     }
 }

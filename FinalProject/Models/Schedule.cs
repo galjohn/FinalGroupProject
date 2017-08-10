@@ -7,7 +7,7 @@ namespace FinalProject.Models
 {
     public class Schedule
     {
-        public int studentID { get; set; }
+        public int StudentId { get; set; }
         public List<Section> Sections { get; set; }
         public List<Restriction> Restrictions { get; set; }
     }

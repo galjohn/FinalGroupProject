@@ -7,8 +7,8 @@ namespace FinalProject.Models
 {
     public class Timeslot
     {
-        public string dayOfWeek { get; set; }
-        public int startTime { get; set; }
-        public int duration { get; set; }
+        public string DayOfWeek { get; set; }
+        public int StartTime { get; set; }
+        public int Duration { get; set; }
     }
 }

@@ -7,9 +7,9 @@ namespace FinalProject.Models
 {
     public class Student
     {
-        public int studentID { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string program { get; set; }
+        public int StudentId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Program { get; set; }
     }
 }

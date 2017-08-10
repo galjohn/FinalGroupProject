@@ -7,9 +7,9 @@ namespace FinalProject.Models
 {
     public class Section
     {
-        public int sectionID { get; set; }
-        public string courseName { get; set; }
-        public Timeslot timeslot { get; set; }
-        public string professor { get; set; }
+        public int SectionId { get; set; }
+        public string CourseName { get; set; }
+        public Timeslot Timeslot { get; set; }
+        public string Professor { get; set; }
     }
 }
