@@ -13,5 +13,9 @@ namespace FinalProject.Controllers
         {
             return View();
         }
+        public ActionResult Add()
+        {
+            return View();
+        }
     }
 }

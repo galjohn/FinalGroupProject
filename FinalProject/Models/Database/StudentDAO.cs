@@ -15,7 +15,8 @@ namespace FinalProject.Models
             var db = ScheduleDB.GetInstance();
             var sql =
                 string.Format("INSERT INTO Students " +
-                              $"VALUES ('{student.firstName}' , '{student.lastName}', '{student.program}')");
+                              $"VALUES ('{student.FirstName}' , '{student.LastName}', '{student.Program}'," +
+                              $"'{student.Username}', {student.Password})");
             db.ExecuteSql(sql);
         }
 
@@ -29,7 +30,7 @@ namespace FinalProject.Models
             var db = ScheduleDB.GetInstance();
             var sql =
                 string.Format("SELECT * " +
-                              "FROM Customers " +
+                              "FROM Students " +
                               $"WHERE StudentID = {id}");
             var results = db.ExecuteSelectSql(sql);
             if (results.HasRows)
@@ -37,13 +38,27 @@ namespace FinalProject.Models
                 results.Read();
                 return new Student
                 {
-                    studentID = (int)results["StudentID"],
-                    firstName = results["FirstName"].ToString(),
-                    lastName = results["LastName"].ToString(),
-                    program = results["Program"].ToString()
+                    StudentId = (int)results["StudentID"],
+                    FirstName = results["FirstName"].ToString(),
+                    LastName = results["LastName"].ToString(),
+                    Program = results["Program"].ToString(),
+                    Username = results["Username"].ToString(),
+                    Password = results["Password"].ToString()
                 };
             }
             return null;
+        }
+        public static bool CheckForStudent(Student student)
+        {
+            var db = ScheduleDB.GetInstance();
+            var sql =
+                string.Format("SELECT * FROM Students where Username = '{0}'", student.Username);
+            var results = db.ExecuteSelectSql(sql);
+            if (results.HasRows)
+            {
+                return true;
+            }
+            return false;
         }
 
         public static Student GetStudent(string firstName, string lastName)
@@ -60,10 +75,12 @@ namespace FinalProject.Models
                 results.Read();
                 return new Student
                 {
-                    studentID = (int)results["StudentID"],
-                    firstName = results["FirstName"].ToString(),
-                    lastName = results["LastName"].ToString(),
-                    program = results["Program"].ToString()
+                    StudentId = (int)results["StudentID"],
+                    FirstName = results["FirstName"].ToString(),
+                    LastName = results["LastName"].ToString(),
+                    Program = results["Program"].ToString(),
+                    Username = results["Username"].ToString(),
+                    Password = results["Password"].ToString()
                 };
             }
             return null;
@@ -80,13 +97,13 @@ namespace FinalProject.Models
 
         public static void Update(Student student)
         {
-            //var restrictions = student.
             var db = ScheduleDB.GetInstance();
             var sql = string.Format("UPDATE Students " +
-                                    $"SET FirstName = '{student.firstName}'" +
-                                    $", LastName = '{student.lastName}'" +
-                                    $", Program = '{student.program}'");
-                                    //$", Restrictions = {} Where Id = {4}",
+                                    $"SET FirstName = '{student.FirstName}'" +
+                                    $", LastName = '{student.LastName}'" +
+                                    $", Program = '{student.Program}'" +
+                                    $", Username = '{student.Username}'" +
+                                    $", Password = '{student.Password}'");
                
             db.ExecuteSql(sql);
         }

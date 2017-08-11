@@ -193,6 +193,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Database\RestrictionDAO.cs" />
+    <Compile Include="Models\Database\ScheduleDAO.cs" />
     <Compile Include="Models\Database\ScheduleDB.cs" />
     <Compile Include="Models\Database\SectionDAO.cs" />
     <Compile Include="Models\GenerateSchedules.cs" />
@@ -202,6 +204,7 @@
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Database\StudentDAO.cs" />
     <Compile Include="Models\Timeslot.cs" />
+    <Compile Include="Models\ViewModels\NewStudentViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +241,7 @@
     <Content Include="Views\Section.cshtml" />
     <Content Include="Views\Restrictions.cshtml" />
     <Content Include="Views\Schedules.cshtml" />
+    <Content Include="Views\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
