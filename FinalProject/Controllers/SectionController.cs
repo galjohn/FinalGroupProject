@@ -9,7 +9,16 @@ namespace FinalProject.Controllers
     public class SectionController : Controller
     {
         // GET: Session
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public ActionResult Sections()
+        {
+            return View();
+        }
+        public ActionResult Add()
         {
             return View();
         }

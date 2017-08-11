@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Login</h2>
+<h2>Login or Register</h2>
 
 @using (Html.BeginForm("Login", "Student", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -32,4 +32,5 @@
             <input type="submit" value="Login" class="btn btn-default" />
         </div>
     </div>
+    @Html.ActionLink("Register", "Register", "Student", new { }, null)
 }

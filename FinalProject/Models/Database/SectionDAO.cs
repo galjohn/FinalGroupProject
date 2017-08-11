@@ -61,6 +61,7 @@ namespace FinalProject.Models.Database
 //            }
 //
 //            return sections;
+            return null;
         }
 
         public static List<Section> GetSections(string professor)

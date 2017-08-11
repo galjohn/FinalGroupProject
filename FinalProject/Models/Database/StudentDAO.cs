@@ -30,7 +30,7 @@ namespace FinalProject.Models
             var db = ScheduleDB.GetInstance();
             var sql =
                 string.Format("SELECT * " +
-                              "FROM Customers " +
+                              "FROM Students " +
                               $"WHERE StudentID = {id}");
             var results = db.ExecuteSelectSql(sql);
             if (results.HasRows)
@@ -47,6 +47,18 @@ namespace FinalProject.Models
                 };
             }
             return null;
+        }
+        public static bool CheckForStudent(Student student)
+        {
+            var db = ScheduleDB.GetInstance();
+            var sql =
+                string.Format("SELECT * FROM Students where Username = '{0}'", student.Username);
+            var results = db.ExecuteSelectSql(sql);
+            if (results.HasRows)
+            {
+                return true;
+            }
+            return false;
         }
 
         public static Student GetStudent(string firstName, string lastName)
