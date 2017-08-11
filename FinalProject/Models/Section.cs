@@ -9,7 +9,7 @@ namespace FinalProject.Models
     {
         public int SectionId { get; set; }
         public string CourseName { get; set; }
-        public Timeslot Timeslot { get; set; }
+        public List<Timeslot> Timeslots { get; set; }
         public string Professor { get; set; }
     }
 }
