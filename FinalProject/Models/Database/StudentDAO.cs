@@ -19,6 +19,11 @@ namespace FinalProject.Models
             db.ExecuteSql(sql);
         }
 
+        internal static Student GetStudent(string username)
+        {
+            throw new NotImplementedException();
+        }
+
         public static Student GetStudent(int id)
         {
             var db = ScheduleDB.GetInstance();
