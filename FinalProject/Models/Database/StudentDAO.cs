@@ -85,7 +85,6 @@ namespace FinalProject.Models
 
         public static void Update(Student student)
         {
-            //var restrictions = student.
             var db = ScheduleDB.GetInstance();
             var sql = string.Format("UPDATE Students " +
                                     $"SET FirstName = '{student.FirstName}'" +
