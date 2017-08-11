@@ -35,7 +35,7 @@ namespace FinalProject.Models.Database
                    SectionId = (int)results["SectionID"],
                    CourseName = results["CourseName"].ToString(),
                    Professor = results["Professor"].ToString(),
-                   Timeslots = GetTimeListFromJSON(results["CourseTimes"].ToString())
+                   Timeslots = GetTimeListFromJSON(results["Timeslots"].ToString())
                 };
             }
             return null;
@@ -61,7 +61,7 @@ namespace FinalProject.Models.Database
                     SectionId = (int)results["SectionID"],
                     CourseName = results["CourseName"].ToString(),
                     Professor = results["Professor"].ToString(),
-                    Timeslots = GetTimeListFromJSON(results["CourseTimes"].ToString())
+                    Timeslots = GetTimeListFromJSON(results["Timeslots"].ToString())
                 };
 
                 sections.Add(section);
@@ -87,7 +87,7 @@ namespace FinalProject.Models.Database
                     SectionId = (int)results["SectionID"],
                     CourseName = results["CourseName"].ToString(),
                     Professor = results["Professor"].ToString(),
-                    Timeslots = GetTimeListFromJSON(results["CourseTimes"].ToString())
+                    Timeslots = GetTimeListFromJSON(results["Timeslots"].ToString())
                 };
 
                 sections.Add(section);
@@ -112,7 +112,7 @@ namespace FinalProject.Models.Database
             var sql = string.Format("UPDATE Sections " +
                                     $"SET CourseName = '{section.CourseName}'" +
                                     $", Professor = '{section.Professor}'" +
-                                    $", CourseTimes = '{GetJSONTimeList(section.Timeslots)}' " +
+                                    $", Timeslots = '{GetJSONTimeList(section.Timeslots)}' " +
                                     $"WHERE SectionID = {section.SectionId}");
           db.ExecuteSql(sql);
         }
