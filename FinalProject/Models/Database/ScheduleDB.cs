@@ -15,7 +15,7 @@ namespace FinalProject.Models.Database
 
         private ScheduleDB()
         {
-            _connection = new SqlConnection(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ScheduleDB;MultipleActiveResultSets=true");
+           _connection = new SqlConnection(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ScheduleDB;MultipleActiveResultSets=true");
         }
 
         public static ScheduleDB GetInstance()
