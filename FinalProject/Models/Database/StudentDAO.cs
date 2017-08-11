@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using FinalProject.Models.Database;
-using Microsoft.ApplicationInsights.Extensibility.Implementation;
+//using Microsoft.ApplicationInsights.Extensibility.Implementation;
 
 namespace FinalProject.Models
 {

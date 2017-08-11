@@ -190,6 +190,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Database\ScheduleDB.cs" />
+    <Compile Include="Models\Database\SectionDAO.cs" />
     <Compile Include="Models\Restriction.cs" />
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\Section.cs" />
