@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace FinalProject.Controllers
 {
-    public class SessionController : Controller
+    public class SectionController : Controller
     {
         // GET: Session
-        public ActionResult Sessions()
+        public ActionResult Sections()
         {
             return View();
         }

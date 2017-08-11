@@ -188,7 +188,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RestrictionController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
-    <Compile Include="Controllers\SessionController.cs" />
+    <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -234,7 +234,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login.cshtml" />
-    <Content Include="Views\Sessions.cshtml" />
+    <Content Include="Views\Section.cshtml" />
     <Content Include="Views\Restrictions.cshtml" />
     <Content Include="Views\Schedules.cshtml" />
   </ItemGroup>
