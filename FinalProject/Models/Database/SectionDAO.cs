@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 
 namespace FinalProject.Models.Database
@@ -10,83 +11,90 @@ namespace FinalProject.Models.Database
     {
         public static void Create(Section section)
         {
-            //todo  Talk about timeslot
-            //      Section in general w/DB
-
-            //            var db = ScheduleDB.GetInstance();
-            //            var sql =
-            //                string.Format("INSERT INTO Sections " +
-            //                              $"VALUES ('{section.courseName}' , '{section.professor}', '{}')");
-            //            db.ExecuteSql(sql);
+            var timeslots = GetJSONTimeList(section.Timeslots);
+            var db = ScheduleDB.GetInstance();
+            var sql =
+                string.Format("INSERT INTO Sections " +
+                                $"VALUES ('{section.CourseName}' , '{section.Professor}', '{timeslots}')");
+            db.ExecuteSql(sql);
         }
 
         public static Section GetSection(int id)
         {
-//            var db = ScheduleDB.GetInstance();
-//            var sql =
-//                string.Format("SELECT * " +
-//                              "FROM Sections " +
-//                              $"WHERE StudentID = {id}");
-//            var results = db.ExecuteSelectSql(sql);
-//            if (results.HasRows)
-//            {
-//                results.Read();
-//                return new Section
-//                {
-//                   
-//                };
-//            }
+            var db = ScheduleDB.GetInstance();
+            var sql =
+                string.Format("SELECT * " +
+                              "FROM Sections " +
+                              $"WHERE SectionID = {id}");
+            var results = db.ExecuteSelectSql(sql);
+            if (results.HasRows)
+            {
+                results.Read();
+                return new Section
+                {
+                   SectionId = (int)results["SectionID"],
+                   CourseName = results["CourseName"].ToString(),
+                   Professor = results["Professor"].ToString(),
+                   Timeslots = GetTimeListFromJSON(results["CourseTimes"].ToString())
+                };
+            }
             return null;
         }
 
         public static List<Section> GetSections(Timeslot timeslot)
         {
-//            var sections = new List<Section>();
-//            var db = ScheduleDB.GetInstance();
-//            var results =
-//                db.ExecuteSelectSql("SELECT * " +
-//                                    "FROM Sections " +
-//                                    "WHERE Timeslot = ");
-//
-//            while (results.Read())
-//            {
-//
-//                var section = new Section()
-//                {
-//                    
-//                };
-//
-//                sections.Add(section);
-//
-//            }
-//
-//            return sections;
-            return null;
+            var timeList = new List<Timeslot>();
+            timeList.Add(timeslot);
+   
+            var sections = new List<Section>();
+            var db = ScheduleDB.GetInstance();
+            var results =
+                db.ExecuteSelectSql("SELECT * " +
+                                    "FROM Sections " +
+                                    $"WHERE Timeslot = {GetJSONTimeList(timeList)}");
+
+            while (results.Read())
+            {
+
+                var section = new Section()
+                {
+                    SectionId = (int)results["SectionID"],
+                    CourseName = results["CourseName"].ToString(),
+                    Professor = results["Professor"].ToString(),
+                    Timeslots = GetTimeListFromJSON(results["CourseTimes"].ToString())
+                };
+
+                sections.Add(section);
+
+            }
+            return sections;
         }
 
         public static List<Section> GetSections(string professor)
         {
-//            var sections = new List<Section>();
-//            var db = ScheduleDB.GetInstance();
-//            var results =
-//                db.ExecuteSelectSql("SELECT * " +
-//                                    "FROM Sections " +
-//                                    "WHERE Timeslot = ");
-//
-//            while (results.Read())
-//            {
-//
-//                var section = new Section()
-//                {
-//                    
-//                };
-//
-//                sections.Add(section);
-//
-//            }
-//
-//            return sections;
-throw new NotImplementedException();
+            var sections = new List<Section>();
+            var db = ScheduleDB.GetInstance();
+            var results =
+                db.ExecuteSelectSql("SELECT * " +
+                                    "FROM Sections " +
+                                    "WHERE Timeslot = ");
+
+            while (results.Read())
+            {
+
+                var section = new Section()
+                {
+                    SectionId = (int)results["SectionID"],
+                    CourseName = results["CourseName"].ToString(),
+                    Professor = results["Professor"].ToString(),
+                    Timeslots = GetTimeListFromJSON(results["CourseTimes"].ToString())
+                };
+
+                sections.Add(section);
+
+            }
+
+            return sections;
         }
 
         public static void Delete(int id)
@@ -100,14 +108,32 @@ throw new NotImplementedException();
 
         public static void Update(Section section)
         {
-//            var db = ScheduleDB.GetInstance();
-//            var sql = string.Format("UPDATE Students " +
-//                                    $"SET FirstName = '{student.firstName}'" +
-//                                    $", LastName = '{student.lastName}'" +
-//                                    $", Program = '{student.program}'");
-//            //$", Restrictions = {} Where Id = {4}",
-//
-//            db.ExecuteSql(sql);
+            var db = ScheduleDB.GetInstance();
+            var sql = string.Format("UPDATE Sections " +
+                                    $"SET CourseName = '{section.CourseName}'" +
+                                    $", Professor = '{section.Professor}'" +
+                                    $", CourseTimes = '{GetJSONTimeList(section.Timeslots)}' " +
+                                    $"WHERE SectionID = {section.SectionId}");
+          db.ExecuteSql(sql);
+        }
+
+        private static string GetJSONTimeList(List<Timeslot> times)
+        {
+            var jsonSerialiser = new JavaScriptSerializer();
+            var jsonStr = jsonSerialiser.Serialize(times);
+            return jsonStr;
+        }
+
+        private static List<Timeslot> GetTimeListFromJSON(string jsonTimes)
+        {
+            var timeList = new List<Timeslot>();
+            if (jsonTimes != null)
+            {
+                var jsonSerialiser = new JavaScriptSerializer();
+                var jsonList = (List<Timeslot>)jsonSerialiser.DeserializeObject(jsonTimes);
+                timeList = jsonList;
+            }
+            return timeList;
         }
     }
 }

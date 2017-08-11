@@ -193,6 +193,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Database\RestrictionDAO.cs" />
+    <Compile Include="Models\Database\ScheduleDAO.cs" />
     <Compile Include="Models\Database\ScheduleDB.cs" />
     <Compile Include="Models\Database\SectionDAO.cs" />
     <Compile Include="Models\GenerateSchedules.cs" />
