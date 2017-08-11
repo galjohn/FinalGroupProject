@@ -54,7 +54,7 @@ CREATE TABLE [dbo].[Sections](
 	[SectionID] [int] NOT NULL,
 	[CourseName] [nvarchar](50) NOT NULL,
 	[Professor] [nvarchar](100) NULL,
-	[CourseTimes] [nvarchar](100) NOT NULL,
+	[Timeslots] [nvarchar](250) NOT NULL,
 	[Description] [nvarchar](250) NULL,
  CONSTRAINT [PK_Sections] PRIMARY KEY CLUSTERED 
 (
