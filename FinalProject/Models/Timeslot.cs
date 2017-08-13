@@ -10,5 +10,4 @@ namespace FinalProject.Models
         public int[] ClassTime { get; set; }
         public string Professor { get; set; }
     }
-
 }

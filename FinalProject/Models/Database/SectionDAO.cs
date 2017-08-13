@@ -15,7 +15,7 @@ namespace FinalProject.Models.Database
             var db = ScheduleDB.GetInstance();
             var sql =
                 string.Format("INSERT INTO Sections " +
-                                $"VALUES ('{section.CourseName}' , '{section.Professor}', '{timeslots}')");
+                                $"VALUES ('{section.CourseName}' , '{timeslots}')");
             db.ExecuteSql(sql);
         }
 
@@ -34,7 +34,6 @@ namespace FinalProject.Models.Database
                 {
                    SectionId = (int)results["SectionID"],
                    CourseName = results["CourseName"].ToString(),
-                   Professor = results["Professor"].ToString(),
                    Timeslots = GetTimeListFromJSON(results["Timeslots"].ToString())
                 };
             }
@@ -60,7 +59,6 @@ namespace FinalProject.Models.Database
                 {
                     SectionId = (int)results["SectionID"],
                     CourseName = results["CourseName"].ToString(),
-                    Professor = results["Professor"].ToString(),
                     Timeslots = GetTimeListFromJSON(results["Timeslots"].ToString())
                 };
 
@@ -86,7 +84,6 @@ namespace FinalProject.Models.Database
                 {
                     SectionId = (int)results["SectionID"],
                     CourseName = results["CourseName"].ToString(),
-                    Professor = results["Professor"].ToString(),
                     Timeslots = GetTimeListFromJSON(results["Timeslots"].ToString())
                 };
 
@@ -111,7 +108,6 @@ namespace FinalProject.Models.Database
             var db = ScheduleDB.GetInstance();
             var sql = string.Format("UPDATE Sections " +
                                     $"SET CourseName = '{section.CourseName}'" +
-                                    $", Professor = '{section.Professor}'" +
                                     $", Timeslots = '{GetJSONTimeList(section.Timeslots)}' " +
                                     $"WHERE SectionID = {section.SectionId}");
           db.ExecuteSql(sql);

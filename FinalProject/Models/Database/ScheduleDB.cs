@@ -15,9 +15,10 @@ namespace FinalProject.Models.Database
 
         private ScheduleDB()
         {
-            //_connection = new SqlConnection(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ScheduleDB;MultipleActiveResultSets=true");
+            //John's Connection String
+            _connection = new SqlConnection(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ScheduleDB;MultipleActiveResultSets=true");
             // Jamie's Connection String
-            _connection = new SqlConnection(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ScheduleDB;Data Source=LEMON-LAPTOP;MultipleActiveResultSets=true");
+            //_connection = new SqlConnection(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ScheduleDB;Data Source=LEMON-LAPTOP;MultipleActiveResultSets=true");
         }
 
         public static ScheduleDB GetInstance()

@@ -1,8 +1,168 @@
-﻿
+﻿@model FinalProject.Models.Section
 @{
-    ViewBag.Title = "Sections";
+    ViewBag.Title = "Section";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Sections</h2>
+<h2>Section</h2>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.CourseName)
+    @Html.TextBoxFor(m => m.CourseName, new { @class = "form-control", id="courseName" })
+    @Html.ValidationMessageFor(m => m.CourseName)
+</div>
+<h3>Timeslots</h3>
+<table class="table" width="80%">
+    <tbody id="timeslotBody">
+    </tbody>
+</table>
+
+<button id="submitBtn" type="submit" class="btn btn-default">Save</button>
+<button id="addTime" class="btn btn-default">Add Time</button>
+
+<script>
+    var model = @Html.Raw(Json.Encode(Model));
+    
+    console.log(model);
+    
+    function Timeslot() {
+        this.ClassTime = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        this.Professor = "";
+    } 
+    function Section() {
+        this.CourseName = "";
+        this.Timeslots = [];
+    }
+
+    $('#addTime').on('click', function() {
+        var numTimes = $('#timeslotBody').find('tr').length;
+        $('#timeslotBody').append(newTimeRow(numTimes+1));
+    });
+
+    $('#submitBtn').on('click', function() {
+        
+        var timeslots = [];
+        
+
+        var tableRows = $('#timeslotBody').find('tr');
+        $(tableRows).each(function() {
+            var selects = $(this).find('select');
+            var input = $(this).find('input');
+            var day = parseInt($(selects).get(0).value);
+            var stime = parseInt($(selects).get(1).value);
+            var duration = parseInt($(selects).get(2).value);
+            var timeslot = new Timeslot();
+            timeslot.ClassTime[day] = stime;
+            timeslot.ClassTime[day + 1] = duration;
+            timeslot.Professor = $(input).val();
+            timeslots.push(timeslot);
+        });
+
+        var section = new Section();
+        section.CourseName = $('#courseName').val();
+        section.Timeslots = timeslots;
+
+        console.log(section);
+
+        $.ajax({
+            type: 'POST',
+            url: '../api/Sections/',
+            data: JSON.stringify(section),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    });
+
+    var loadTimeslots = function() {
+        if (model == null) {
+            $('#timeslotBody').append(newTimeRow(1));
+        }
+    }
+    
+    var newTimeRow = function(dayNum) {
+        var tr = $('<tr>');
+        var header = $('<h4>').html("Day " + dayNum);
+        
+        var dayLbl = getLabelFor("daySelect", "Day");
+        var startLbl = getLabelFor("timeSelect", "Start Time");
+        var durationLbl = getLabelFor("durationSelect", "Duration");
+        var profLbl = getLabelFor("professorIn", "Professor");
+
+        var day = $('<div>', { "class": "form-group" });
+        $(day).append(dayLbl);
+        $(day).append(daySelect());
+        
+        var start = $('<div>', { "class": "form-group" });
+        $(start).append(startLbl);
+        $(start).append(timeSelect());
+        
+        var duration = $('<div>', { "class": "form-group" });
+        $(duration).append(durationLbl);
+        $(duration).append(durationSelect());
+        
+        var professor = $('<div>', { "class": "form-group" });
+        $(professor).append(profLbl);
+        $(professor).append($('<input>', {"type":"text", "id":"professorIn"}));
+        
+        $(tr).append(header);
+        $(tr).append(day);
+        $(tr).append(start);
+        $(tr).append(duration);
+        $(tr).append(professor);
+        return tr;
+    }
+
+    var daySelect = function() {
+        var dayOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var select = $('<select>', {"id":"daySelect"});
+        $(select).append(getDefaultSelectOption('day'));
+        for (var i = 0; i < 7; i++) {
+            var option = $('<option>', { "value": i*2 });
+            $(option).html(dayOfTheWeek[i]);
+            $(select).append(option);
+        }
+        return select;
+    }
+
+    var timeSelect = function() {
+        var select = $('<select>', {"id":"timeSelect"});
+        $(select).append(getDefaultSelectOption('start time'));
+        for (var i = 0; i < 24; i++) {
+            var option = $('<option>', { "value": i });
+            $(option).html(i + ":00");
+            $(select).append(option);
+        }
+        return select;
+    }
+
+    var durationSelect = function() {
+        var select = $('<select>', {"id":"durationSelect"});
+        $(select).append(getDefaultSelectOption('duration'));
+        for (var i = 1; i < 4; i++) {
+            var option = $('<option>', { "value": i });
+            $(option).html(i + ":00");
+            $(select).append(option);
+        }
+        return select;
+    }
+
+    var getDefaultSelectOption = function(input) {
+        var option = $('<option>', { "disabled":"disabled", "selected":"selected"});
+        $(option).html('-- select a ' + input);
+        return option;
+    }
+
+    var getLabelFor = function(item, text) {
+        var label = $('<label>', { "class": "col-sm-2 col-form-label", "for": item });
+        $(label).html(text);
+        return label;
+    }
+
+    loadTimeslots();
+
+
+</script>
 
