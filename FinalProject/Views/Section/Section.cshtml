@@ -12,7 +12,7 @@
     @Html.ValidationMessageFor(m => m.CourseName)
 </div>
 <h3>Timeslots</h3>
-<table class="table" width="80%">
+<table class="table" style="width: 50%;">
     <tbody id="timeslotBody">
     </tbody>
 </table>
@@ -40,11 +40,9 @@
     });
 
     $('#submitBtn').on('click', function() {
-        
         var timeslots = [];
-        
-
         var tableRows = $('#timeslotBody').find('tr');
+        
         $(tableRows).each(function() {
             var selects = $(this).find('select');
             var input = $(this).find('input');
@@ -84,6 +82,10 @@
     
     var newTimeRow = function(dayNum) {
         var tr = $('<tr>');
+        var fieldset = $('<div>', {"class":"container"});
+        $(fieldset).css("border", "1px solid grey");
+        $(fieldset).css("border-radius", "8px");
+        
         var header = $('<h4>').html("Day " + dayNum);
         
         var dayLbl = getLabelFor("daySelect", "Day");
@@ -105,19 +107,20 @@
         
         var professor = $('<div>', { "class": "form-group" });
         $(professor).append(profLbl);
-        $(professor).append($('<input>', {"type":"text", "id":"professorIn"}));
+        $(professor).append($('<input>', {"type":"text", "id":"professorIn", "class":"form-control"}));
         
-        $(tr).append(header);
-        $(tr).append(day);
-        $(tr).append(start);
-        $(tr).append(duration);
-        $(tr).append(professor);
+        $(fieldset).append(header);
+        $(fieldset).append(day);
+        $(fieldset).append(start);
+        $(fieldset).append(duration);
+        $(fieldset).append(professor);
+        $(tr).append(fieldset);
         return tr;
     }
 
     var daySelect = function() {
         var dayOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        var select = $('<select>', {"id":"daySelect"});
+        var select = $('<select>', {"id":"daySelect", "class":"form-control"});
         $(select).append(getDefaultSelectOption('day'));
         for (var i = 0; i < 7; i++) {
             var option = $('<option>', { "value": i*2 });
@@ -128,22 +131,22 @@
     }
 
     var timeSelect = function() {
-        var select = $('<select>', {"id":"timeSelect"});
+        var select = $('<select>', {"id":"timeSelect", "class":"form-control"});
         $(select).append(getDefaultSelectOption('start time'));
-        for (var i = 0; i < 24; i++) {
+        for (var i = 8; i < 20; i++) {
             var option = $('<option>', { "value": i });
-            $(option).html(i + ":00");
+            $(option).html(get12HourTime(i));
             $(select).append(option);
         }
         return select;
     }
 
     var durationSelect = function() {
-        var select = $('<select>', {"id":"durationSelect"});
+        var select = $('<select>', {"id":"durationSelect", "class":"form-control"});
         $(select).append(getDefaultSelectOption('duration'));
         for (var i = 1; i < 4; i++) {
             var option = $('<option>', { "value": i });
-            $(option).html(i + ":00");
+            $(option).html(i + " Hour");
             $(select).append(option);
         }
         return select;
@@ -151,18 +154,26 @@
 
     var getDefaultSelectOption = function(input) {
         var option = $('<option>', { "disabled":"disabled", "selected":"selected"});
-        $(option).html('-- select a ' + input);
+        $(option).html('-- select a ' + input + '--');
         return option;
     }
 
     var getLabelFor = function(item, text) {
-        var label = $('<label>', { "class": "col-sm-2 col-form-label", "for": item });
+        var label = $('<label>', { "class": "col-sm-3 col-form-label", "for": item });
         $(label).html(text);
         return label;
     }
 
+    var get12HourTime = function(time) {
+        if (time < 12) {
+            return time + ":00am";
+        } else if (time == 12) {
+            return "12:00pm";
+        } else {
+            return (time - 12) + ":00pm";
+        }
+    }
     loadTimeslots();
-
 
 </script>
 
