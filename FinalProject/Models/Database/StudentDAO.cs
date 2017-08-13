@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using FinalProject.Models.Database;
+using FinalProject.Models.ViewModels;
+
 //using Microsoft.ApplicationInsights.Extensibility.Implementation;
 
 namespace FinalProject.Models
@@ -14,9 +16,9 @@ namespace FinalProject.Models
         {
             var db = ScheduleDB.GetInstance();
             var sql =
-                string.Format("INSERT INTO Students " +
+                string.Format("INSERT INTO Students (Firstname, Lastname, Program, Username, Password)" +
                               $"VALUES ('{student.FirstName}' , '{student.LastName}', '{student.Program}'," +
-                              $"'{student.Username}', {student.Password})");
+                              $"'{student.Username}', '{student.Password}')");
             db.ExecuteSql(sql);
         }
 
