@@ -237,18 +237,14 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Login.cshtml" />
-    <Content Include="Views\Section.cshtml" />
-    <Content Include="Views\Restrictions.cshtml" />
-    <Content Include="Views\Schedules.cshtml" />
-    <Content Include="Views\Register.cshtml" />
+    <Content Include="Views\Student\Login.cshtml" />
+    <Content Include="Views\Section\Section.cshtml" />
+    <Content Include="Views\Restriction\Restrictions.cshtml" />
+    <Content Include="Views\Schedule\Schedules.cshtml" />
+    <Content Include="Views\Student\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Restriction\" />
-    <Folder Include="Views\Schedule\" />
-    <Folder Include="Views\Session\" />
-    <Folder Include="Views\Student\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
