@@ -153,11 +153,12 @@
 
     function Timeslot() {
         this.ClassTime = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        this.Professor = "";
     }
     function Restriction() {
         this.StudentID = usrCookie;
-        this.NoGapsBiggerThanOneHour = false;
-        this.NoGaps = false;
+        this.NoGapsBiggerThanOneHour = 0;
+        this.NoGaps = 0;
         this.Timeslots = [];
     }
     $('#addRestriction').on('click', function () {
@@ -183,8 +184,8 @@
 
         var restriction = new Restriction();
         restriction.Timeslots = timeslots;
-        restriction.NoGapsBiggerThanOneHour = $('#noGapsBiggerThanOneHour').val();
-        restriction.NoGaps = $('#noGaps').val();
+        restriction.NoGapsBiggerThanOneHour = checkBoxTrueFalse('noGapsBiggerThanOneHour');
+        restriction.NoGaps = checkBoxTrueFalse('noGaps');
 
         console.log(restriction);
 
@@ -306,6 +307,12 @@
             }
         }
         return "";
+    }
+    var checkBoxTrueFalse = function(checkBoxName) {
+        if (document.getElementById(checkBoxName).checked) {
+            return 1;
+        }
+        return 0;
     }
     usrCookie = getCookie("UserID")
     loadTimeslots();
