@@ -17,7 +17,7 @@ namespace FinalProject.Models.Database
             }
         }
 
-        public static Schedule GetSchedule(int studentId)
+        public static Schedule GetSchedule(string studentId)
         {
             var schedule = new Schedule();
             var sections = new List<Section>();
@@ -25,7 +25,7 @@ namespace FinalProject.Models.Database
             var results =
                 db.ExecuteSelectSql("SELECT SectionID " +
                                     "FROM Schedule " +
-                                    $"WHERE StudentId = {studentId}");
+                                    $"WHERE StudentId = '{studentId}'");
 
             while (results.Read())
             {
@@ -46,7 +46,7 @@ namespace FinalProject.Models.Database
             Create(schedule);
         }
 
-        public static void Delete(int studentId)
+        public static void Delete(string studentId)
         {
             var db = ScheduleDB.GetInstance();
             var sql =
