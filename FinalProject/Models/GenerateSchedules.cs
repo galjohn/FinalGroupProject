@@ -54,6 +54,7 @@ namespace FinalProject.Models
                 }
                 if (CheckForRestrictions(currentSchedule, restriction))
                 {
+                    currentSchedule.ScheduleMatrix = OrganizeSchedule(currentSchedule);
                     Schedules.Add(currentSchedule);
                 }
 
@@ -148,7 +149,7 @@ namespace FinalProject.Models
                     var toCompareClassTime = schedule.Sections[i].Timeslots[0].ClassTime;
 
                     // Loops through each day
-                    for (int j = 0; j < 6; j++)
+                    for (int j = 0; j < 7; j++)
                     {
                         // If either section has no class in the day, no need to compare for overlap
                         if (baseClassTime[j * 2] != 0 || toCompareClassTime[j * 2] != 0)
@@ -259,7 +260,7 @@ namespace FinalProject.Models
             foreach (var section in schedule.Sections)
             {
                 // Day
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 7; i++)
                 {
                     // If there is no restriction, skip this
                     if (classtime[i * 2] != 0 || classtime[i * 2 + 1] != 0)
@@ -284,7 +285,7 @@ namespace FinalProject.Models
             foreach (var section in schedule.Sections)
             {
                 // Day
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 7; i++)
                 {
 
                     if (section.Timeslots[0].ClassTime[i * 2] != 0)
@@ -299,6 +300,26 @@ namespace FinalProject.Models
             return scheduleMatrix;
         }
 
+        public string[,] OrganizeSchedule(Schedule schedule)
+        {
+            string[,] organizedSchedule = new string[7, 24];
+            foreach (var section in schedule.Sections)
+            {
+                // Day
+                for (int i = 0; i < 7; i++)
+                {
+
+                    if (section.Timeslots[0].ClassTime[i * 2] != 0)
+                    {
+                        for (int j = section.Timeslots[0].ClassTime[i * 2] - 1; j < section.Timeslots[0].ClassTime[(i * 2) + 1] - 1; j++)
+                        {
+                            organizedSchedule[i, j] = section.CourseName;
+                        }
+                    }
+                }
+            }
+            return organizedSchedule;
+        }
 
         // Function for debugging, delete for "production"
         public void PrintScheduleMatrix(bool[,] scheduleMatrix)
