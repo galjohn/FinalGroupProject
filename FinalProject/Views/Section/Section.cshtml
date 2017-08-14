@@ -167,13 +167,12 @@
     var get12HourTime = function(time) {
         if (time < 12) {
             return time + ":00am";
-        } else if (time == 12) {
+        } else if (time === 12) {
             return "12:00pm";
         } else {
             return (time - 12) + ":00pm";
         }
     }
     loadTimeslots();
-
 </script>
 

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using FinalProject.Models;
+using FinalProject.Models.Database;
 
 namespace FinalProject.Controllers.api
 {
@@ -13,7 +14,7 @@ namespace FinalProject.Controllers.api
         [HttpPost]
         public string Add(Section section)
         {
-            var check = section;
+            SectionDAO.Create(section);
             return "Added";
         }
     }
