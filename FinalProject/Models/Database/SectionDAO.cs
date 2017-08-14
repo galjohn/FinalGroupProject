@@ -36,34 +36,6 @@ namespace FinalProject.Models.Database
             return null;
         }
 
-        public static List<Section> GetSections(Timeslot timeslot)
-        {
-            var timeList = new List<Timeslot>();
-            timeList.Add(timeslot);
-   
-            var sections = new List<Section>();
-            var db = ScheduleDB.GetInstance();
-            var results =
-                db.ExecuteSelectSql("SELECT * " +
-                                    "FROM Sections " +
-                                    $"WHERE Timeslot = {GetJSONTimeList(timeList)}");
-
-            while (results.Read())
-            {
-
-                var section = new Section()
-                {
-                    SectionId = (int)results["SectionID"],
-                    CourseName = results["CourseName"].ToString(),
-                    Timeslots = GetTimeListFromJSON(results["Timeslots"].ToString())
-                };
-
-                sections.Add(section);
-
-            }
-            return sections;
-        }
-
         public static List<Section> GetSections(string professor)
         {
             var sections = new List<Section>();
@@ -71,7 +43,7 @@ namespace FinalProject.Models.Database
             var results =
                 db.ExecuteSelectSql("SELECT * " +
                                     "FROM Sections " +
-                                    "WHERE Timeslot = ");
+                                    "WHERE Timeslot LIKE '%Professor%' ");
 
             while (results.Read())
             {
@@ -113,14 +85,31 @@ namespace FinalProject.Models.Database
         {
             var jsonSerialiser = new JavaScriptSerializer();
             var jsonStr = jsonSerialiser.Serialize(times);
+            for (var i = jsonStr.IndexOf('{'); i > -1; i = jsonStr.IndexOf('{', i + 2))
+            {
+                jsonStr = jsonStr.Insert(i, "{");
+            }
+            for (var i = jsonStr.IndexOf('}'); i > -1; i = jsonStr.IndexOf('}', i + 2))
+            {
+                jsonStr = jsonStr.Insert(i, "}");
+            }
             return jsonStr;
         }
 
         private static List<Timeslot> GetTimeListFromJSON(string jsonTimes)
         {
+            
             var timeList = new List<Timeslot>();
             if (jsonTimes != null)
             {
+                for (var i = jsonTimes.IndexOf('{'); i > -1; i = jsonTimes.IndexOf('{', i + 2))
+                {
+                    jsonTimes = jsonTimes.Remove(i, 1);
+                }
+                for (var i = jsonTimes.IndexOf('}'); i > -1; i = jsonTimes.IndexOf('}', i + 2))
+                {
+                    jsonTimes = jsonTimes.Remove(i, 1);
+                }
                 var jsonSerialiser = new JavaScriptSerializer();
                 var jsonList = (List<Timeslot>)jsonSerialiser.DeserializeObject(jsonTimes);
                 timeList = jsonList;

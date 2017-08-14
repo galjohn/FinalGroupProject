@@ -6,6 +6,6 @@ namespace FinalProject.Models
     {
         public int StudentId { get; set; }
         public List<Section> Sections { get; set; }
-      
+        public string[,] ScheduleMatrix { get; set; }
     }
 }

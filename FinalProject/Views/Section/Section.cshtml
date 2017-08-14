@@ -12,7 +12,7 @@
     @Html.ValidationMessageFor(m => m.CourseName)
 </div>
 <h3>Timeslots</h3>
-<table class="table" style="width: 80%;">
+<table class="table" style="width: 60%;">
     <tbody id="timeslotBody">
     </tbody>
 </table>
@@ -22,7 +22,7 @@
 
 <script>
     var model = @Html.Raw(Json.Encode(Model));
-    
+    var validationState = true;
     console.log(model);
     
     function Timeslot() {
@@ -45,7 +45,15 @@
         
         $(tableRows).each(function() {
             var selects = $(this).find('select');
+            $(selects).each(function() {
+                if (!validate(this)) {
+                    validationState = false;
+                }
+            });
             var input = $(this).find('input');
+            if (!validate($(input))) {
+                validationState = false;
+            }
             var day = parseInt($(selects).get(0).value);
             var stime = parseInt($(selects).get(1).value);
             var duration = parseInt($(selects).get(2).value);
@@ -58,20 +66,33 @@
 
         var section = new Section();
         section.CourseName = $('#courseName').val();
+        if (!validate($('#courseName'))) {
+            validationState = false;
+        }
         section.Timeslots = timeslots;
 
         console.log(section);
 
-        $.ajax({
-            type: 'POST',
-            url: '../api/Sections/',
-            data: JSON.stringify(section),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function(data) {
-                console.log(data);
-            }
-        });
+        if (validationState == true) {
+            $.ajax({
+                type: 'POST',
+                url: '../api/Sections/',
+                data: JSON.stringify(section),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function(data) {
+                    if (data) {
+                        alert("Section has been added.");
+                        location.reload();
+                    } else {
+                        alert("Error Adding Section.");
+                    }
+                    
+                }
+            });
+        } else {
+            validationState = true;
+        }
     });
 
     var loadTimeslots = function() {
@@ -167,13 +188,28 @@
     var get12HourTime = function(time) {
         if (time < 12) {
             return time + ":00am";
-        } else if (time == 12) {
+        } else if (time === 12) {
             return "12:00pm";
         } else {
             return (time - 12) + ":00pm";
         }
     }
-    loadTimeslots();
 
+    var validate = function(element) {
+        var div;
+        if ($(element).val() == null || $(element).val() == "") {
+            div = $(element).parent();
+            console.log(div);
+            $(div).addClass("has-error");
+            return false;
+        } else {
+            div = $(element).parent();
+            console.log(div);
+            $(div).removeClass("has-error");
+            return true;
+        }
+    }
+
+    loadTimeslots();
 </script>
 

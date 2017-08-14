@@ -11,9 +11,9 @@ namespace FinalProject.Models
         {
             var db = ScheduleDB.GetInstance();
             var sql =
-                string.Format("INSERT INTO Students (Firstname, Lastname, Program, Username, Password)" +
-                              $"VALUES ('{student.FirstName}' , '{student.LastName}', '{student.Program}'," +
-                              $"'{student.Username}', '{student.Password}')");
+                string.Format("INSERT INTO Students (StudentID, Firstname, Lastname, Program, Password)" +
+                              $"VALUES ('{student.Username}','{student.FirstName}' , '{student.LastName}', '{student.Program}'," +
+                              $"'{student.Password}')");
             db.ExecuteSql(sql);
         }
 
@@ -24,7 +24,7 @@ namespace FinalProject.Models
             var sql =
                 string.Format("SELECT * " +
                               "FROM Students " +
-                              $"WHERE Username = '{username}'" +
+                              $"WHERE StudentID = '{username}'" +
                               $"AND Password = '{password}'");
             var results = db.ExecuteSelectSql(sql);
             if (results.HasRows)
@@ -32,11 +32,10 @@ namespace FinalProject.Models
                 results.Read();
                 return new Student
                 {
-                    StudentId = (int)results["StudentID"],
+                    Username = results["StudentID"].ToString(),
                     FirstName = results["FirstName"].ToString(),
                     LastName = results["LastName"].ToString(),
                     Program = results["Program"].ToString(),
-                    Username = results["Username"].ToString(),
                     Password = results["Password"].ToString()
                 };
             }
@@ -49,18 +48,17 @@ namespace FinalProject.Models
             var sql =
                 string.Format("SELECT * " +
                               "FROM Students " +
-                              $"WHERE StudentID = {student.StudentId}");
+                              $"WHERE StudentID = {student.Username}");
             var results = db.ExecuteSelectSql(sql);
             if (results.HasRows)
             {
                 results.Read();
                 return new Student
                 {
-                    StudentId = (int)results["StudentID"],
+                    Username = results["StudentID"].ToString(),
                     FirstName = results["FirstName"].ToString(),
                     LastName = results["LastName"].ToString(),
                     Program = results["Program"].ToString(),
-                    Username = results["Username"].ToString(),
                     Password = results["Password"].ToString()
                 };
             }
@@ -70,7 +68,7 @@ namespace FinalProject.Models
         {
             var db = ScheduleDB.GetInstance();
             var sql =
-                string.Format("SELECT * FROM Students where Username = '{0}'", student.Username);
+                string.Format("SELECT * FROM Students where StudentID = '{0}'", student.Username);
             var results = db.ExecuteSelectSql(sql);
             if (results.HasRows)
             {
@@ -104,12 +102,12 @@ namespace FinalProject.Models
             return null;
         }*/
 
-        public static void Delete(int id)
+        public static void Delete(string username)
         {
             var db = ScheduleDB.GetInstance();
             var sql =
                 string.Format("Delete FROM Students " +
-                              $"WHERE Id = {id}");
+                              $"WHERE StudentID = '{username}'");
             db.ExecuteSql(sql);
         }
 
@@ -120,8 +118,8 @@ namespace FinalProject.Models
                                     $"SET FirstName = '{student.FirstName}'" +
                                     $", LastName = '{student.LastName}'" +
                                     $", Program = '{student.Program}'" +
-                                    $", Username = '{student.Username}'" +
-                                    $", Password = '{student.Password}'");
+                                    $", Password = '{student.Password}'" +
+                                    $" WHERE StudentID = '{student.Username}'");
                
             db.ExecuteSql(sql);
         }
