@@ -215,6 +215,7 @@
     <Compile Include="Models\GenerateSchedules.cs" />
     <Compile Include="Models\Restriction.cs" />
     <Compile Include="Models\Schedule.cs" />
+    <Compile Include="Models\ScheduleGeneratorTester.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Database\StudentDAO.cs" />

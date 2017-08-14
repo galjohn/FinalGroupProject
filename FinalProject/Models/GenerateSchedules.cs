@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FinalProject.Models
 {
@@ -49,8 +50,6 @@ namespace FinalProject.Models
                             }
                         }
                     });
-                    /*Console.WriteLine(section.CourseName);
-                    Console.WriteLine(string.Join(" ", section.Timeslots[sectionCounters[sectionSelector]].ClassTime));*/
                     sectionSelector++;
                 }
                 if (CheckForRestrictions(currentSchedule, restriction))
@@ -93,7 +92,7 @@ namespace FinalProject.Models
                 return false;
             }
 
-            if (restricion.NoGapsBiggerThanOneHour)
+            if (restricion.NoGaps)
             {
                 if (!CheckForNoGaps(schedule))
                 {
@@ -101,7 +100,7 @@ namespace FinalProject.Models
                 }
             }
 
-            if (restricion.MustHaveOneHourBreaks)
+            if (restricion.NoGapsBiggerThanOneHour)
             {
                 if (!CheckForHourGaps(schedule))
                 {
@@ -122,9 +121,9 @@ namespace FinalProject.Models
 
             if (restricion.Timeslots.Count > 0)
             {
-                for (int i = 0; i < restricion.Timeslots.Count - 1; i++)
+                foreach (Timeslot t in restricion.Timeslots)
                 {
-                    if (!CheckForTimeSlots(schedule, restricion.Timeslots[i].ClassTime))
+                    if (!CheckForTimeSlots(schedule, t.ClassTime))
                     {
                         return false;
                     }
@@ -152,15 +151,15 @@ namespace FinalProject.Models
                     for (int j = 0; j < 6; j++)
                     {
                         // If either section has no class in the day, no need to compare for overlap
-                        if (baseClassTime[j] != 0 || toCompareClassTime[j] != 0)
+                        if (baseClassTime[j * 2] != 0 || toCompareClassTime[j * 2] != 0)
                         {
                             // If the starting time to be checked is between start and end time of current section OR
                             // the ending time is between start and end time of current section
                             // return false
-                            if ((toCompareClassTime[j] >= baseClassTime[j] &&
-                                 toCompareClassTime[j] < baseClassTime[j + 1]) ||
-                                (toCompareClassTime[j + 1] > baseClassTime[j] &&
-                                 toCompareClassTime[j + 1] <= baseClassTime[j + 1]))
+                            if ((toCompareClassTime[j * 2] >= baseClassTime[j * 2] &&
+                                 toCompareClassTime[j * 2] < baseClassTime[j * 2 + 1]) ||
+                                (toCompareClassTime[j * 2 + 1] > baseClassTime[j * 2] &&
+                                 toCompareClassTime[j * 2 + 1] <= baseClassTime[j * 2 + 1]))
                             {
                                 return false;
                             }
@@ -175,11 +174,77 @@ namespace FinalProject.Models
 
         public bool CheckForNoGaps(Schedule schedule)
         {
+            bool[,] scheduleMatrix = ScheduleToMatrix(schedule);
+            // Loop through each day
+            for (int i = 0; i < scheduleMatrix.GetLength(0); i++)
+            {
+                bool atLeastOneClass = false;
+                // Loop Through each hour
+                for (int j = 0; j < scheduleMatrix.GetLength(1); j++)
+                {
+                    // If true, there is a class at this time
+                    // Flags that theres at least one class
+                    if (scheduleMatrix[i, j] && !atLeastOneClass)
+                    {
+                        atLeastOneClass = true;
+                    }
+                    // Whenever there is an empty hour will check for more classes
+                    // If any found, means there is a gap in the schedule
+                    if (!scheduleMatrix[i, j] && atLeastOneClass)
+                    {
+                        for (int k = j + 1; k < scheduleMatrix.GetLength(1); k++)
+                        {
+                            if (scheduleMatrix[i, k])
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
             return true;
         }
 
         public bool CheckForHourGaps(Schedule schedule)
         {
+
+            bool[,] scheduleMatrix = ScheduleToMatrix(schedule);
+            int gapTime = 0;
+            // Loop through each day
+            for (int i = 0; i < scheduleMatrix.GetLength(0); i++)
+            {
+                bool classPresent = false;
+                // Loop Through each hour
+                for (int j = 0; j < scheduleMatrix.GetLength(1); j++)
+                {
+                    // If true, there is a class at this time
+                    // Flags that theres a class
+                    // Zeroes gap counter
+                    if (scheduleMatrix[i, j] && !classPresent)
+                    {
+                        classPresent = true;
+                        gapTime = 0;
+                    }
+                    // Whenever there is an empty hour will check for more classes
+                    // If any found, means there is a gap in the schedule
+                    // Will count the gap and discard schedule if larger than 1 hour
+                    if (!scheduleMatrix[i, j] && classPresent)
+                    {
+                        for (int k = j + 1; k < scheduleMatrix.GetLength(1); k++)
+                        {
+                            gapTime++;
+                            if (scheduleMatrix[i, k])
+                            {
+                                if (gapTime > 1)
+                                {
+                                    return false;
+                                }
+                                gapTime = 0;
+                            }
+                        }
+                    }
+                }
+            }
             return true;
         }
 
@@ -190,10 +255,78 @@ namespace FinalProject.Models
 
         public bool CheckForTimeSlots(Schedule schedule, int[] classtime)
         {
+            bool[,] scheduleMatrix = ScheduleToMatrix(schedule);
+            foreach (var section in schedule.Sections)
+            {
+                // Day
+                for (int i = 0; i < 6; i++)
+                {
+                    // If there is no restriction, skip this
+                    if (classtime[i * 2] != 0 || classtime[i * 2 + 1] != 0)
+                    {
+                        // Hour
+                        for (int j = classtime[i * 2] - 1; j < classtime[i * 2 + 1] - 1; j++)
+                        {
+                            if (scheduleMatrix[i, j])
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
             return true;
         }
 
+        public bool[,] ScheduleToMatrix(Schedule schedule)
+        {
+            bool[,] scheduleMatrix = new bool[7, 24];
+            foreach (var section in schedule.Sections)
+            {
+                // Day
+                for (int i = 0; i < 6; i++)
+                {
 
+                    if (section.Timeslots[0].ClassTime[i * 2] != 0)
+                    {
+                        for (int j = section.Timeslots[0].ClassTime[i * 2] - 1; j < section.Timeslots[0].ClassTime[(i * 2) + 1] - 1; j++)
+                        {
+                            scheduleMatrix[i, j] = true;
+                        }
+                    }
+                }
+            }
+            return scheduleMatrix;
+        }
+
+
+        // Function for debugging, delete for "production"
+        public void PrintScheduleMatrix(bool[,] scheduleMatrix)
+        {
+            Console.WriteLine("Schedule:");
+            Console.WriteLine("      sun   mon   tue   wed   thu   fri   sat ");
+            int rowLength = scheduleMatrix.GetLength(1);
+            int colLength = scheduleMatrix.GetLength(0);
+
+            for (int i = 0; i < rowLength; i++)
+            {
+                if (i < 9)
+                {
+                    Console.Write(0);
+                }
+                Console.Write(i + 1 + "h ");
+                for (int j = 0; j < colLength; j++)
+                {
+
+                    Console.Write(scheduleMatrix[j, i] + " ");
+                    if (scheduleMatrix[j, i])
+                    {
+                        Console.Write(" ");
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
     }
 
 }
