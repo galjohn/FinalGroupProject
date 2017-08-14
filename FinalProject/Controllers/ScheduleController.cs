@@ -16,7 +16,7 @@ namespace FinalProject.Controllers
                 return RedirectToAction("Login", "Student");
             }
 
-            var studentSections = SectionDAO.GetStudentSections(int.Parse(cookie));
+            var studentSections = SectionDAO.GetStudentSections(cookie);
             if (studentSections == null)
             {
                 return RedirectToAction("Index", "Section");
