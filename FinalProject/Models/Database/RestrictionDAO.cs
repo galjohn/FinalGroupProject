@@ -64,14 +64,31 @@ namespace FinalProject.Models.Database
         {
             var jsonSerialiser = new JavaScriptSerializer();
             var jsonStr = jsonSerialiser.Serialize(times);
+            for (var i = jsonStr.IndexOf('{'); i > -1; i = jsonStr.IndexOf('{', i + 2))
+            {
+                jsonStr = jsonStr.Insert(i, "{");
+            }
+            for (var i = jsonStr.IndexOf('}'); i > -1; i = jsonStr.IndexOf('}', i + 2))
+            {
+                jsonStr = jsonStr.Insert(i, "}");
+            }
             return jsonStr;
         }
 
         private static List<Timeslot> GetTimeListFromJSON(string jsonTimes)
         {
+
             var timeList = new List<Timeslot>();
             if (jsonTimes != null)
             {
+                for (var i = jsonTimes.IndexOf('{'); i > -1; i = jsonTimes.IndexOf('{', i + 2))
+                {
+                    jsonTimes = jsonTimes.Remove(i, 1);
+                }
+                for (var i = jsonTimes.IndexOf('}'); i > -1; i = jsonTimes.IndexOf('}', i + 2))
+                {
+                    jsonTimes = jsonTimes.Remove(i, 1);
+                }
                 var jsonSerialiser = new JavaScriptSerializer();
                 var jsonList = (List<Timeslot>)jsonSerialiser.DeserializeObject(jsonTimes);
                 timeList = jsonList;
