@@ -20,18 +20,22 @@ namespace FinalProject.Controllers
         {
             if (ModelState.IsValidField("Username") && ModelState.IsValidField("Password"))
             {
-                var result = StudentDAO.GetStudent(student.Username);
+                var result = StudentDAO.GetStudent(student.Username, student.Password);
                 if (result != null)
                 {
                     if (student.Password == result.Password)
                     {
                         Response.SetCookie(new HttpCookie("UserID", result.StudentId.ToString()));
                         Response.SetCookie(new HttpCookie("Name", (result.FirstName.ToString() + " " + result.LastName.ToString())));
-                        return RedirectToAction("Index", "Section");
+                        return RedirectToAction("Home", "Student");
                     }
                 }
                 ViewBag.NoUser = true;
             }
+            return View();
+        }
+        public ActionResult Home()
+        {
             return View();
         }
         [AllowAnonymous]

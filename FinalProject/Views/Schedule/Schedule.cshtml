@@ -1,0 +1,60 @@
+﻿@model List<FinalProject.Models.Schedule>
+@{
+    ViewBag.Title = "Schedules";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Schedules</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var schedule in Model)
+        {
+            <tr>
+                @foreach (var section in schedule.Sections)
+                {
+                    <td>@section.CourseName</td>
+                    foreach (var timeslot in section.Timeslots)
+                    {
+                        if (timeslot.ClassTime[0] != 0)
+                        {
+                            <td>Sunday: @timeslot.ClassTime[0].ToString() :00 to @timeslot.ClassTime[1].ToString() :00</td>
+                        }
+                        else if (timeslot.ClassTime[2] != 0)
+                        {
+                            <td>Monday: @timeslot.ClassTime[2].ToString() :00 to @timeslot.ClassTime[3].ToString() :00</td>
+                        }
+                        else if (timeslot.ClassTime[4] != 0)
+                        {
+                            <td>Tuesday: @timeslot.ClassTime[4].ToString() :00 to @timeslot.ClassTime[5].ToString() :00</td>
+                        }
+                        else if (timeslot.ClassTime[6] != 0)
+                        {
+                            <td>Wednesday: @timeslot.ClassTime[6].ToString() :00 to @timeslot.ClassTime[7].ToString() :00</td>
+                        }
+                        else if (timeslot.ClassTime[8] != 0)
+                        {
+                            <td>Thursday: @timeslot.ClassTime[8].ToString() :00 to @timeslot.ClassTime[9].ToString() :00</td>
+                        }
+                        else if (timeslot.ClassTime[10] != 0)
+                        {
+                            <td>Friday: @timeslot.ClassTime[10].ToString() :00 to @timeslot.ClassTime[11].ToString() :00</td>
+                        }
+                        else if (timeslot.ClassTime[2] != 0)
+                        {
+                            <td>Saturday: @timeslot.ClassTime[12].ToString() :00 to @timeslot.ClassTime[13].ToString() :00</td>
+                        }
+                    }
+                    <br />
+                }
+            </tr>
+        }
+
+    </tbody>
+</table>
