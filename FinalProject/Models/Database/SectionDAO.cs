@@ -11,34 +11,29 @@ namespace FinalProject.Models.Database
             var db = ScheduleDB.GetInstance();
             var sql =
                 string.Format("INSERT INTO Sections " +
-                                $"VALUES ('{section.CourseName}' , '{timeslots}')");
+                              $"VALUES ('{section.CourseName}' , '{timeslots}')");
             db.ExecuteSql(sql);
         }
 
-        public static List<Section> GetStudentSections(int id)
+        public static Section GetSection(int id)
         {
-            var studentSections = new List<Section>();
             var db = ScheduleDB.GetInstance();
             var sql =
                 string.Format("SELECT * " +
                               "FROM Sections " +
                               $"WHERE SectionID = {id}");
             var results = db.ExecuteSelectSql(sql);
-            if (results == null)
-            {
-                return null;
-            }
-            while (results.HasRows)
+            if (results.HasRows)
             {
                 results.Read();
-                studentSections.Add(new Section
+                return new Section
                 {
-                    SectionId = (int) results["SectionID"],
+                    SectionId = (int)results["SectionID"],
                     CourseName = results["CourseName"].ToString(),
                     Timeslots = GetTimeListFromJSON(results["Timeslots"].ToString())
-                });
+                };
             }
-            return studentSections;
+            return null;
         }
 
         public static List<Section> GetSections(string professor)
@@ -83,7 +78,7 @@ namespace FinalProject.Models.Database
                                     $"SET CourseName = '{section.CourseName}'" +
                                     $", Timeslots = '{GetJSONTimeList(section.Timeslots)}' " +
                                     $"WHERE SectionID = {section.SectionId}");
-          db.ExecuteSql(sql);
+            db.ExecuteSql(sql);
         }
 
         private static string GetJSONTimeList(List<Timeslot> times)
@@ -103,7 +98,7 @@ namespace FinalProject.Models.Database
 
         private static List<Timeslot> GetTimeListFromJSON(string jsonTimes)
         {
-            
+
             var timeList = new List<Timeslot>();
             if (jsonTimes != null)
             {
