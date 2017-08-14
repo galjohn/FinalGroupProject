@@ -12,7 +12,7 @@ namespace FinalProject.Models.Database
                 string.Format("INSERT INTO Restrictions " +
                               $"VALUES ({restriction.StudentId} " +
                               $", '{restriction.NoGapsBiggerThanOneHour}'" +
-                              $", '{restriction.MustHaveOneHourBreaks}" +
+                              $", '{restriction.NoGaps}" +
                               $", '{GetJSONTimeList(restriction.Timeslots)}'");
             db.ExecuteSql(sql);
         }
@@ -32,7 +32,7 @@ namespace FinalProject.Models.Database
                 {
                     RestrictionId = (int)results["RestrictionID"],
                     StudentId = (int)results["StudentID"],
-                    MustHaveOneHourBreaks = (bool)results["MustHaveOneHourBreaks"],
+                    NoGaps = (bool)results["MustHaveOneHourBreaks"],
                     Timeslots = GetTimeListFromJSON(results["Timeslots"].ToString()),
                     NoGapsBiggerThanOneHour = (bool)results["NoGapsBiggerThanOneHour"]
                 };
@@ -53,7 +53,7 @@ namespace FinalProject.Models.Database
         {
             var db = ScheduleDB.GetInstance();
             var sql = string.Format("UPDATE Restrictions " +
-                                    $"SET MustHaveOneHourGaps = '{restriction.MustHaveOneHourBreaks}'" +
+                                    $"SET MustHaveOneHourGaps = '{restriction.NoGaps}'" +
                                     $", NoGapsBiggerThanOneHour = '{restriction.NoGapsBiggerThanOneHour}'" +
                                     $", Timeslots = '{GetJSONTimeList(restriction.Timeslots)}' " +
                                     $"WHERE RestrictionID = {restriction.RestrictionId}");
