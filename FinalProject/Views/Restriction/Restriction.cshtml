@@ -10,12 +10,12 @@
 @*{*@
     <div class="checkbox">
         <label>
-            @Html.CheckBoxFor(m => m.NoGapsBiggerThanOneHour) No breaks between classes larger than 1 hour
+            @Html.CheckBoxFor(m => m.NoGapsBiggerThanOneHour, new {id = "noGapsBiggerThanOneHour"}) No breaks between classes larger than 1 hour
         </label>
     </div>
     <div class="checkbox">
         <label>
-            @Html.CheckBoxFor(m => m.NoGaps) No breaks between classes
+            @Html.CheckBoxFor(m => m.NoGaps, new {id = "noGaps"}) No breaks between classes
         </label>
     </div>
     <div>
@@ -148,13 +148,16 @@
 @*}*@
 <script>
     var model = @Html.Raw(Json.Encode(Model));
-
+    var usrCookie;
     console.log(model);
 
     function Timeslot() {
         this.ClassTime = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     }
     function Restriction() {
+        this.StudentID = usrCookie;
+        this.NoGapsBiggerThanOneHour = false;
+        this.NoGaps = false;
         this.Timeslots = [];
     }
     $('#addRestriction').on('click', function () {
@@ -180,12 +183,14 @@
 
         var restriction = new Restriction();
         restriction.Timeslots = timeslots;
+        restriction.NoGapsBiggerThanOneHour = $('#noGapsBiggerThanOneHour').val();
+        restriction.NoGaps = $('#noGaps').val();
 
         console.log(restriction);
 
         $.ajax({
             type: 'POST',
-            url: '../Restrictions',
+            url: '/api/Restrictions/',
             data: JSON.stringify(restriction),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
@@ -286,5 +291,22 @@
             return (time - 12) + ":00 PM";
         }
     }
+    //Code from W3Schools
+    var getCookie = function(cookieName) {
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    usrCookie = getCookie("UserID")
     loadTimeslots();
 </script>
