@@ -43,7 +43,7 @@ namespace FinalProject.Models.Database
             var results =
                 db.ExecuteSelectSql("SELECT * " +
                                     "FROM Sections " +
-                                    "WHERE Timeslot LIKE '%professor%' ");
+                                    "WHERE Timeslot LIKE '%Professor%' ");
 
             while (results.Read())
             {
