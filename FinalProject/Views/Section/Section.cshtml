@@ -81,8 +81,13 @@
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function(data) {
-                    alert("Section has been added.");
-                    location.reload();
+                    if (data) {
+                        alert("Section has been added.");
+                        location.reload();
+                    } else {
+                        alert("Error Adding Section.");
+                    }
+                    
                 }
             });
         } else {
@@ -191,13 +196,14 @@
     }
 
     var validate = function(element) {
+        var div;
         if ($(element).val() == null || $(element).val() == "") {
-            var div = $(element).parent();
+            div = $(element).parent();
             console.log(div);
             $(div).addClass("has-error");
             return false;
         } else {
-            var div = $(element).parent();
+            div = $(element).parent();
             console.log(div);
             $(div).removeClass("has-error");
             return true;
