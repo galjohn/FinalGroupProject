@@ -215,6 +215,7 @@
     <Compile Include="Models\GenerateSchedules.cs" />
     <Compile Include="Models\Restriction.cs" />
     <Compile Include="Models\Schedule.cs" />
+    <Compile Include="Models\ScheduleGeneratorTester.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Database\StudentDAO.cs" />
@@ -254,9 +255,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Student\Login.cshtml" />
     <Content Include="Views\Section\Section.cshtml" />
-    <Content Include="Views\Restriction\Restrictions.cshtml" />
-    <Content Include="Views\Schedule\Schedules.cshtml" />
+    <Content Include="Views\Restriction\Restriction.cshtml" />
+    <Content Include="Views\Schedule\Schedule.cshtml" />
     <Content Include="Views\Student\Register.cshtml" />
+    <Content Include="Views\Student\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
