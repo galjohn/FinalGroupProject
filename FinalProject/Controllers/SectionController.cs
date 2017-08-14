@@ -7,7 +7,7 @@ namespace FinalProject.Controllers
         // GET: Session
         public ActionResult Index()
         {
-            var cookie = Request.Cookies["UserID"].Value;
+            var cookie = Request.Cookies["UserID"]?.Value;
             if (string.IsNullOrEmpty(cookie))
             {
                 return RedirectToAction("Login", "Student");
@@ -17,7 +17,7 @@ namespace FinalProject.Controllers
 
         public ActionResult Add()
         {
-            var cookie = Request.Cookies["UserID"].Value;
+            var cookie = Request.Cookies["UserID"]?.Value;
             if (string.IsNullOrEmpty(cookie))
             {
                 return RedirectToAction("Login", "Student");

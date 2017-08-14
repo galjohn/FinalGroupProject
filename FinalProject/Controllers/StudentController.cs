@@ -75,7 +75,11 @@ namespace FinalProject.Controllers
         }
         public ActionResult Logout()
         {
-            return Content("Logout Code Needed...");
+            Request.Cookies["UserID"].Expires = DateTime.Now;
+            Request.Cookies["Name"].Expires = DateTime.Now;
+            Response.Cookies["UserID"].Expires = DateTime.Now;
+            Response.Cookies["Name"].Expires = DateTime.Now;
+            return View("Login");
         }
     }
 }
