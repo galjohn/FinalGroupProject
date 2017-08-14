@@ -15,27 +15,10 @@ namespace FinalProject.Models.Database
             db.ExecuteSql(sql);
         }
 
-        public static Section GetSection(int id)
+        public static List<Section> GetStudentSections(string username)
         {
-            var db = ScheduleDB.GetInstance();
-            var sql =
-                string.Format("SELECT * " +
-                              "FROM Sections " +
-                              $"WHERE SectionID = {id}");
-            var results = db.ExecuteSelectSql(sql);
-            if (results.HasRows)
-            {
-                results.Read();
-                return new Section
-                {
-                    SectionId = (int)results["SectionID"],
-                    CourseName = results["CourseName"].ToString(),
-                    Timeslots = GetTimeListFromJSON(results["Timeslots"].ToString())
-                };
-            }
             return null;
         }
-
         public static Section GetSection(int id)
         {
             var db = ScheduleDB.GetInstance();
@@ -121,20 +104,10 @@ namespace FinalProject.Models.Database
         {
 
             var timeList = new List<Timeslot>();
-            if (jsonTimes != null)
-            {
-                for (var i = jsonTimes.IndexOf('{'); i > -1; i = jsonTimes.IndexOf('{', i + 2))
-                {
-                    jsonTimes = jsonTimes.Remove(i, 1);
-                }
-                for (var i = jsonTimes.IndexOf('}'); i > -1; i = jsonTimes.IndexOf('}', i + 2))
-                {
-                    jsonTimes = jsonTimes.Remove(i, 1);
-                }
-                var jsonSerialiser = new JavaScriptSerializer();
-                var jsonList = (List<Timeslot>)jsonSerialiser.DeserializeObject(jsonTimes);
-                timeList = jsonList;
-            }
+            if (jsonTimes == null) return timeList;
+            var jsonSerialiser = new JavaScriptSerializer();
+            var jsonList = jsonSerialiser.Deserialize<List<Timeslot>>(jsonTimes);
+            timeList = jsonList;
             return timeList;
         }
     }

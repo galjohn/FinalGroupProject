@@ -14,19 +14,18 @@ namespace FinalProject.Controllers
             {
                 return RedirectToAction("Login", "Student");
             }
-
-            var studentSections = SectionDAO.GetStudentSections(int.Parse(cookie));
+            var studentSections = SectionDAO.GetStudentSections(cookie);
             if (studentSections == null)
             {
                 return RedirectToAction("Index", "Section");
             }
-            var studentRestrictions = RestrictionDAO.GetRestriction(int.Parse(cookie));
+            var studentRestrictions = RestrictionDAO.GetRestriction(cookie);
             if (studentRestrictions == null)
             {
                 {
                     return RedirectToAction("Index", "Restriction");
                 }
-            }
+        }
 
         /*List<Section> dummysections = new List<Section>
         {

@@ -10,31 +10,31 @@ namespace FinalProject.Models.Database
             var db = ScheduleDB.GetInstance();
             var sql =
                 string.Format("INSERT INTO Restrictions " +
-                              $"VALUES ({restriction.StudentId} " +
-                              $", '{restriction.NoGapsBiggerThanOneHour}'" +
-                              $", '{restriction.NoGaps}" +
-                              $", '{GetJSONTimeList(restriction.Timeslots)}'");
+                              $"VALUES ('{restriction.StudentId}'" +
+                              $", {BoolToInt(restriction.NoGapsBiggerThanOneHour)}" +
+                              $", {BoolToInt(restriction.NoGaps)}" +
+                              $", '{GetJSONTimeList(restriction.Timeslots)}')");
             db.ExecuteSql(sql);
         }
 
-        public static Restriction GetRestriction(int studentId)
+        public static Restriction GetRestriction(string studentId)
         {
             var db = ScheduleDB.GetInstance();
             var sql =
                 string.Format("SELECT * " +
                               "FROM Restrictions " +
-                              $"WHERE StudentID = {studentId}");
+                              $"WHERE StudentID = '{studentId}'");
             var results = db.ExecuteSelectSql(sql);
             if (results.HasRows)
             {
                 results.Read();
+                
                 return new Restriction
                 {
-                    RestrictionId = (int)results["RestrictionID"],
-                    StudentId = (int)results["StudentID"],
-                    NoGaps = (bool)results["MustHaveOneHourBreaks"],
+                    StudentId = results["StudentID"].ToString(),
+                    NoGaps = results.GetBoolean(results.GetOrdinal("MustHaveOneHourBreaks")),
                     Timeslots = GetTimeListFromJSON(results["Timeslots"].ToString()),
-                    NoGapsBiggerThanOneHour = (bool)results["NoGapsBiggerThanOneHour"]
+                    NoGapsBiggerThanOneHour = results.GetBoolean(results.GetOrdinal("NoGapsBiggerThanOneHour"))
                 };
             }
             return null;
@@ -53,10 +53,10 @@ namespace FinalProject.Models.Database
         {
             var db = ScheduleDB.GetInstance();
             var sql = string.Format("UPDATE Restrictions " +
-                                    $"SET MustHaveOneHourGaps = '{restriction.NoGaps}'" +
-                                    $", NoGapsBiggerThanOneHour = '{restriction.NoGapsBiggerThanOneHour}'" +
+                                    $"SET MustHaveOneHourBreaks = '{BoolToInt(restriction.NoGaps)}'" +
+                                    $", NoGapsBiggerThanOneHour = {BoolToInt(restriction.NoGapsBiggerThanOneHour)}" +
                                     $", Timeslots = '{GetJSONTimeList(restriction.Timeslots)}' " +
-                                    $"WHERE RestrictionID = {restriction.RestrictionId}");
+                                    $"WHERE StudentID = '{restriction.StudentId}'");
             db.ExecuteSql(sql);
         }
 
@@ -79,21 +79,20 @@ namespace FinalProject.Models.Database
         {
 
             var timeList = new List<Timeslot>();
-            if (jsonTimes != null)
-            {
-                for (var i = jsonTimes.IndexOf('{'); i > -1; i = jsonTimes.IndexOf('{', i + 2))
-                {
-                    jsonTimes = jsonTimes.Remove(i, 1);
-                }
-                for (var i = jsonTimes.IndexOf('}'); i > -1; i = jsonTimes.IndexOf('}', i + 2))
-                {
-                    jsonTimes = jsonTimes.Remove(i, 1);
-                }
-                var jsonSerialiser = new JavaScriptSerializer();
-                var jsonList = (List<Timeslot>)jsonSerialiser.DeserializeObject(jsonTimes);
-                timeList = jsonList;
-            }
+            var jsonSerialiser = new JavaScriptSerializer();
+            var jsonList = jsonSerialiser.Deserialize<List<Timeslot>>(jsonTimes);
+            timeList = jsonList;
             return timeList;
+        }
+
+        private static int BoolToInt(bool input)
+        {
+            return input ? 1 : 0;
+        }
+
+        private static bool IntToBool(int input)
+        {
+            return input == 1;
         }
     }
 }
