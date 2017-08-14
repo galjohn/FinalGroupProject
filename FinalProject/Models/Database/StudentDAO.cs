@@ -17,18 +17,39 @@ namespace FinalProject.Models
             db.ExecuteSql(sql);
         }
 
-        internal static Student GetStudent(string username)
+        public static Student GetStudent(string username, string password)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            var db = ScheduleDB.GetInstance();
+            var sql =
+                string.Format("SELECT * " +
+                              "FROM Students " +
+                              $"WHERE Username = '{username}'" +
+                              $"AND Password = '{password}'");
+            var results = db.ExecuteSelectSql(sql);
+            if (results.HasRows)
+            {
+                results.Read();
+                return new Student
+                {
+                    StudentId = (int)results["StudentID"],
+                    FirstName = results["FirstName"].ToString(),
+                    LastName = results["LastName"].ToString(),
+                    Program = results["Program"].ToString(),
+                    Username = results["Username"].ToString(),
+                    Password = results["Password"].ToString()
+                };
+            }
+            return null;
         }
 
-        public static Student GetStudent(int id)
+        public static Student GetStudent(Student student)
         {
             var db = ScheduleDB.GetInstance();
             var sql =
                 string.Format("SELECT * " +
                               "FROM Students " +
-                              $"WHERE StudentID = {id}");
+                              $"WHERE StudentID = {student.StudentId}");
             var results = db.ExecuteSelectSql(sql);
             if (results.HasRows)
             {
@@ -58,7 +79,7 @@ namespace FinalProject.Models
             return false;
         }
 
-        public static Student GetStudent(string firstName, string lastName)
+        /*public static Student GetStudent(string firstName, string lastName)
         {
             var db = ScheduleDB.GetInstance();
             var sql =
@@ -81,7 +102,7 @@ namespace FinalProject.Models
                 };
             }
             return null;
-        }
+        }*/
 
         public static void Delete(int id)
         {
