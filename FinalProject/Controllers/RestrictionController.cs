@@ -7,11 +7,11 @@ namespace FinalProject.Controllers
         // GET: Restriction
         public ActionResult Index()
         {
-            return View();
+            return View("Restriction");
         }
         public ActionResult Add()
         {
-            return View();
+            return View("Restriction");
         }
     }
 }

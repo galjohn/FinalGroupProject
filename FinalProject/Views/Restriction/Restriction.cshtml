@@ -6,8 +6,8 @@
 
 <h2>Restrictions</h2>
 
-@using (Html.BeginForm("Add", "Restriction", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
+@*@using (Html.BeginForm("Add", "Restriction", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))*@
+@*{*@
     <div class="checkbox">
         <label>
             @Html.CheckBoxFor(m => m.NoGapsBiggerThanOneHour) No breaks between classes larger than 1 hour
@@ -15,18 +15,18 @@
     </div>
     <div class="checkbox">
         <label>
-            @Html.CheckBoxFor(m => m.MustHaveOneHourBreaks) Must have 1 hour breaks between classes
+            @Html.CheckBoxFor(m => m.NoGaps) No breaks between classes
         </label>
     </div>
     <div>
         <label>Add Timeslot Restriction</label>
     </div>
-    <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    @*<div class="dropdown">
+        <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownMenuDayOfWeek" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             Day
             <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuDayOfWeek">
             <li>Sunday</li>
             <li>Monday</li>
             <li>Tuesday</li>
@@ -35,18 +35,256 @@
             <li>Friday</li>
             <li>Saturday</li>
         </ul>
-    </div>
+    </div>*@
+    @*<table>
+        <tr>
+            <td><div class="list-group">
+                    <button type="button" value="Sunday" class="list-group-item list-group-item-action dayofweek">Sunday</button>
+                    <button type="button" value="Monday" class="list-group-item list-group-item-action dayofweek">Monday</button>
+                    <button type="button" value="Tuesday" class="list-group-item list-group-item-action dayofweek">Tuesday</button>
+                    <button type="button" value="Wednesday" class="list-group-item list-group-item-action dayofweek">Wednesday</button>
+                    <button type="button" value="Thursday" class="list-group-item list-group-item-action dayofweek">Thursday</button>
+                    <button type="button" value="Friday" class="list-group-item list-group-item-action dayofweek">Friday</button>
+                    <button type="button" value="Saturday" class="list-group-item list-group-item-action dayofweek">Saturday</button>
+                </div>
+            </td>
+            $1$<div class="dropdown">
+                <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownMenuStartTime" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Start Time
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuStartTime">
+                    <li>8:00 AM</li>
+                    <li>9:00 AM</li>
+                    <li>10:00 AM</li>
+                    <li>11:00 AM</li>
+                    <li>12:00 PM</li>
+                    <li>1:00 PM</li>
+                    <li>2:00 PM</li>
+                    <li>3:00 PM</li>
+                    <li>4:00 PM</li>
+                    <li>5:00 PM</li>
+                    <li>6:00 PM</li>
+                    <li>7:00 PM</li>
+                </ul>
+            </div>#1#
+            <td>
+                <div class="list-group">
+                    <button type="button" value="8" class="list-group-item list-group-item-action starttime">8:00 AM</button>
+                    <button type="button" value="9" class="list-group-item list-group-item-action starttime">9:00 AM</button>
+                    <button type="button" value="10" class="list-group-item list-group-item-action starttime">10:00 AM</button>
+                    <button type="button" value="11" class="list-group-item list-group-item-action starttime">11:00 AM</button>
+                    <button type="button" value="12" class="list-group-item list-group-item-action starttime">12:00 PM</button>
+                    <button type="button" value="13" class="list-group-item list-group-item-action starttime">1:00 PM</button>
+                    <button type="button" value="14" class="list-group-item list-group-item-action starttime">2:00 PM</button>
+                    <button type="button" value="15" class="list-group-item list-group-item-action starttime">3:00 PM</button>
+                    <button type="button" value="16" class="list-group-item list-group-item-action starttime">4:00 PM</button>
+                    <button type="button" value="17" class="list-group-item list-group-item-action starttime">5:00 PM</button>
+                    <button type="button" value="18" class="list-group-item list-group-item-action starttime">6:00 PM</button>
+                    <button type="button" value="19" class="list-group-item list-group-item-action starttime">7:00 PM</button>
+                </div>
+            </td>
+            $1$<div class="dropdown">
+                <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownMenuEndTime" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    End Time
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuEndTime">
+                    <li>8:00 AM</li>
+                    <li>9:00 AM</li>
+                    <li>10:00 AM</li>
+                    <li>11:00 AM</li>
+                    <li>12:00 PM</li>
+                    <li>1:00 PM</li>
+                    <li>2:00 PM</li>
+                    <li>3:00 PM</li>
+                    <li>4:00 PM</li>
+                    <li>5:00 PM</li>
+                    <li>6:00 PM</li>
+                    <li>7:00 PM</li>
+                    <li>8:00 PM</li>
+                    <li>9:00 PM</li>
+                    <li>10:00 PM</li>
+                </ul>
+            </div>#1#
+            <td>
+                <div class="list-group">
+                    <button type="button" value="8" class="list-group-item list-group-item-action endtime">8:00 AM</button>
+                    <button type="button" value="9" class="list-group-item list-group-item-action endtime">9:00 AM</button>
+                    <button type="button" value="10" class="list-group-item list-group-item-action endtime">10:00 AM</button>
+                    <button type="button" value="11" class="list-group-item list-group-item-action endtime">11:00 AM</button>
+                    <button type="button" value="12" class="list-group-item list-group-item-action endtime">12:00 PM</button>
+                    <button type="button" value="13" class="list-group-item list-group-item-action endtime">1:00 PM</button>
+                    <button type="button" value="14" class="list-group-item list-group-item-action endtime">2:00 PM</button>
+                    <button type="button" value="15" class="list-group-item list-group-item-action endtime">3:00 PM</button>
+                    <button type="button" value="16" class="list-group-item list-group-item-action endtime">4:00 PM</button>
+                    <button type="button" value="17" class="list-group-item list-group-item-action endtime">5:00 PM</button>
+                    <button type="button" value="18" class="list-group-item list-group-item-action endtime">6:00 PM</button>
+                    <button type="button" value="19" class="list-group-item list-group-item-action endtime">7:00 PM</button>
+                    <button type="button" value="20" class="list-group-item list-group-item-action endtime">8:00 PM</button>
+                    <button type="button" value="21" class="list-group-item list-group-item-action endtime">9:00 PM</button>
+                    <button type="button" value="22" class="list-group-item list-group-item-action endtime">10:00 PM</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+<br/>*@
+<table class="table" style="width: 80%;">
+    <tbody id="timeslotBody"></tbody>
+</table>
+<table class="table" style="width: 80%;">
+    <tbody id="listProfessors"></tbody>
+</table>
+    <button id="addRestriction" class="btn btn-default">Add Restriction Time</button>
+    <br/>
+    @*<button id="addProfessor" class="btn btn-default">Add Restricted Professor</button>
+    <br/>*@
+    <button id="submitBtn" type="submit" class="btn btn-default">Save Restrictions</button>
     @*<div class="form-group">
-        @Html.LabelFor(m => m.Timeslots, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Timeslots, new { @class = "form-control" })
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Add Restrictions" class="btn btn-default" />
         </div>
     </div>*@
+@*}*@
+<script>
+    var model = @Html.Raw(Json.Encode(Model));
 
-    <button id="addRestriction" class="btn btn-default">Add Restriction Time</button>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Add Restriction" class="btn btn-default" />
-        </div>
-    </div>
-}
+    console.log(model);
+
+    function Timeslot() {
+        this.ClassTime = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    }
+    function Restriction() {
+        this.Timeslots = [];
+    }
+    $('#addRestriction').on('click', function () {
+        var numTimes = $('#timeslotBody').find('tr').length;
+        $('#timeslotBody').append(newTimeRow(numTimes + 1));
+    });
+    $('#submitBtn').on('click', function () {
+        var timeslots = [];
+        var tableRows = $('#timeslotBody').find('tr');
+
+        $(tableRows).each(function () {
+            var selects = $(this).find('select');
+            /*var input = $(this).find('input');*/
+            var day = parseInt($(selects).get(0).value);
+            var stime = parseInt($(selects).get(1).value);
+            var etime = parseInt($(selects).get(2).value);
+            var timeslot = new Timeslot();
+            timeslot.ClassTime[day] = stime;
+            timeslot.ClassTime[day + 1] = etime;
+            /*timeslot.Professor = $(input).val();*/
+            timeslots.push(timeslot);
+        });
+
+        var restriction = new Restriction();
+        restriction.Timeslots = timeslots;
+
+        console.log(restriction);
+
+        $.ajax({
+            type: 'POST',
+            url: '../Restrictions',
+            data: JSON.stringify(restriction),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    });
+
+    var loadTimeslots = function () {
+        if (model == null) {
+            $('#timeslotBody').append(newTimeRow(1));
+        }
+    }
+    var newTimeRow = function (dayNum) {
+        var tr = $('<tr>');
+        var fieldset = $('<div>', { "class": "container" });
+        $(fieldset).css("border", "1px solid grey");
+        $(fieldset).css("border-radius", "8px");
+
+        var header = $('<h4>').html("Day " + dayNum);
+
+        var dayLbl = getLabelFor("daySelect", "Day");
+        var startLbl = getLabelFor("timeSelect", "Start Time");
+        var endLbl = getLabelFor("endSelect", "End Time");
+
+        var day = $('<div>', { "class": "form-group" });
+        $(day).append(dayLbl);
+        $(day).append(daySelect());
+
+        var start = $('<div>', { "class": "form-group" });
+        $(start).append(startLbl);
+        $(start).append(startTimeSelect());
+
+        var end = $('<div>', { "class": "form-group" });
+        $(end).append(endLbl);
+        $(end).append(endTimeSelect());
+
+        $(fieldset).append(header);
+        $(fieldset).append(day);
+        $(fieldset).append(start);
+        $(fieldset).append(end);
+        $(tr).append(fieldset);
+        return tr;
+    }
+    var daySelect = function () {
+        var dayOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var select = $('<select>', { "id": "daySelect", "class": "form-control" });
+        $(select).append(getDefaultSelectOption('day'));
+        for (var i = 0; i < 7; i++) {
+            var option = $('<option>', { "value": i * 2 });
+            $(option).html(dayOfTheWeek[i]);
+            $(select).append(option);
+        }
+        return select;
+    }
+
+    var startTimeSelect = function () {
+        var select = $('<select>', { "id": "startTimeSelect", "class": "form-control" });
+        $(select).append(getDefaultSelectOption('start time'));
+        for (var i = 8; i < 18; i++) {
+            var option = $('<option>', { "value": i });
+            $(option).html(get12HourTime(i));
+            $(select).append(option);
+        }
+        return select;
+    }
+
+    var endTimeSelect = function () {
+        var select = $('<select>', { "id": "endTimeSelect", "class": "form-control" });
+        $(select).append(getDefaultSelectOption('end time'));
+        for (var i = 8; i < 21; i++) {
+            var option = $('<option>', { "value": i });
+            $(option).html(get12HourTime(i));
+            $(select).append(option);
+        }
+        return select;
+    }
+
+    var getDefaultSelectOption = function (input) {
+        var option = $('<option>', { "disabled": "disabled", "selected": "selected" });
+        $(option).html('-- select a ' + input + '--');
+        return option;
+    }
+
+    var getLabelFor = function (item, text) {
+        var label = $('<label>', { "class": "col-sm-3 col-form-label", "for": item });
+        $(label).html(text);
+        return label;
+    }
+
+    var get12HourTime = function (time) {
+        if (time < 12) {
+            return time + ":00 AM";
+        } else if (time == 12) {
+            return "12:00 PM";
+        } else {
+            return (time - 12) + ":00 PM";
+        }
+    }
+    loadTimeslots();
+</script>

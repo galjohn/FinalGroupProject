@@ -7,7 +7,7 @@ namespace FinalProject.Controllers
         // GET: Schedule
         public ActionResult Index()
         {
-            return View();
+            return View("Schedule");
         }
     }
 }
