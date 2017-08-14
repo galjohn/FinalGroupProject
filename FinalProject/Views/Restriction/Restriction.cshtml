@@ -196,7 +196,14 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (data) {
-                console.log(data);
+                if (data == "Create") {
+                    alert("Restrictions Created.");
+                } else if (data == "Update") {
+                    alert("Restrictions Updated.");
+                } else {
+                    alert("Something is not right.");
+                }
+                
             }
         });
     });

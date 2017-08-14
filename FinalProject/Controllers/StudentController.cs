@@ -75,10 +75,14 @@ namespace FinalProject.Controllers
         }
         public ActionResult Logout()
         {
-            Request.Cookies["UserID"].Expires = DateTime.Now;
-            Request.Cookies["Name"].Expires = DateTime.Now;
-            Response.Cookies["UserID"].Expires = DateTime.Now;
-            Response.Cookies["Name"].Expires = DateTime.Now;
+            var requestCookie = Request.Cookies["UserID"];
+            if (requestCookie != null) requestCookie.Expires = DateTime.Now;
+            var httpCookie = Request.Cookies["Name"];
+            if (httpCookie != null) httpCookie.Expires = DateTime.Now;
+            var responseCookie = Response.Cookies["UserID"];
+            if (responseCookie != null) responseCookie.Expires = DateTime.Now;
+            var cookie = Response.Cookies["Name"];
+            if (cookie != null) cookie.Expires = DateTime.Now;
             return View("Login");
         }
     }
