@@ -16,7 +16,7 @@ namespace FinalProject.Controllers
                 return RedirectToAction("Login", "Student");
             }
 
-            var studentSections = SectionDAO.GetStudentSections(cookie);
+            var studentSections = SectionDAO.GetSections();
             if (studentSections == null)
             {
                 return RedirectToAction("Index", "Section");
@@ -29,132 +29,133 @@ namespace FinalProject.Controllers
                 }
             }
 
-            List<Section> dummySections = new List<Section>
-            {
-                new Section
-                {
-                    SectionId = 1,
-                    CourseName = "Math",
-                    Timeslots = new List<Timeslot>
-                    {
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,8,11,0,0,8,11,0,0,0,0,0,0},
-                            Professor = "John"
-                        },
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,0,0,0,0,8,11,8,11,0,0,0,0},
-                            Professor = "James"
-                        },
-                    },
-                },
-                new Section
-                {
-                    SectionId = 2,
-                    CourseName = "Programming",
-                    Timeslots = new List<Timeslot>
-                    {
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,11,14,0,0,0,0,11,14,0,0,0,0},
-                            Professor = "Bill"
-                        },
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,12,15,0,0,0,0,11,14,0,0,0,0},
-                            Professor = "Bob"
-                        },
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,0,0,12,15,0,0,11,14,0,0,0,0},
-                            Professor = "Buck"
-                        },
-                    },
-                },
-                new Section
-                {
-                    SectionId = 3,
-                    CourseName = "Database",
-                    Timeslots = new List<Timeslot>
-                    {
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,15,18,0,0,0,0,0,0,14,17,0,0},
-                            Professor = "Cole"
-                        },
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,15,18,11,14,0,0,0,0,0,0,0,0},
-                            Professor = "Cid"
-                        },
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,0,0,11,14,11,14,0,0,0,0,0,0},
-                            Professor = "Cid"
-                        },
-                    },
-                },
-                new Section
-                {
-                    SectionId = 4,
-                    CourseName = "Business",
-                    Timeslots = new List<Timeslot>
-                    {
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,0,0,0,0,0,0,0,0,11,14,0,0},
-                            Professor = "Daniel"
-                        },
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,0,0,0,0,0,0,0,0,12,15,0,0},
-                            Professor = "Dante"
-                        },
-                    },
-                },
-                new Section
-                {
-                    SectionId = 5,
-                    CourseName = "Logic",
-                    Timeslots = new List<Timeslot>
-                    {
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,0,0,0,0,0,0,0,0,8,11,0,0},
-                            Professor = "Emir"
-                        },
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,0,0,0,0,8,11,0,0,0,0,0,0},
-                            Professor = "Elton"
-                        },
-                    },
-                },
-                new Section
-                {
-                    SectionId = 6,
-                    CourseName = "Elective",
-                    Timeslots = new List<Timeslot>
-                    {
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,0,0,8,11,0,0,0,0,0,0,0,0},
-                            Professor = "Emir"
-                        },
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,0,0,0,0,11,14,0,0,0,0,0,0},
-                            Professor = "Emir"
-                        },
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,0,0,0,0,0,0,8,11,0,0,0,0},
-                            Professor = "Elton"
-                        },
-                    },
-                },
-            };
+            List<Section> dummySections = SectionDAO.GetSections();
+//            List<Section> dummySections = new List<Section>
+//            {
+//                new Section
+//                {
+//                    SectionId = 1,
+//                    CourseName = "Math",
+//                    Timeslots = new List<Timeslot>
+//                    {
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,8,11,0,0,8,11,0,0,0,0,0,0},
+//                            Professor = "John"
+//                        },
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,0,0,0,0,8,11,8,11,0,0,0,0},
+//                            Professor = "James"
+//                        },
+//                    },
+//                },
+//                new Section
+//                {
+//                    SectionId = 2,
+//                    CourseName = "Programming",
+//                    Timeslots = new List<Timeslot>
+//                    {
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,11,14,0,0,0,0,11,14,0,0,0,0},
+//                            Professor = "Bill"
+//                        },
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,12,15,0,0,0,0,11,14,0,0,0,0},
+//                            Professor = "Bob"
+//                        },
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,0,0,12,15,0,0,11,14,0,0,0,0},
+//                            Professor = "Buck"
+//                        },
+//                    },
+//                },
+//                new Section
+//                {
+//                    SectionId = 3,
+//                    CourseName = "Database",
+//                    Timeslots = new List<Timeslot>
+//                    {
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,15,18,0,0,0,0,0,0,14,17,0,0},
+//                            Professor = "Cole"
+//                        },
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,15,18,11,14,0,0,0,0,0,0,0,0},
+//                            Professor = "Cid"
+//                        },
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,0,0,11,14,11,14,0,0,0,0,0,0},
+//                            Professor = "Cid"
+//                        },
+//                    },
+//                },
+//                new Section
+//                {
+//                    SectionId = 4,
+//                    CourseName = "Business",
+//                    Timeslots = new List<Timeslot>
+//                    {
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,0,0,0,0,0,0,0,0,11,14,0,0},
+//                            Professor = "Daniel"
+//                        },
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,0,0,0,0,0,0,0,0,12,15,0,0},
+//                            Professor = "Dante"
+//                        },
+//                    },
+//                },
+//                new Section
+//                {
+//                    SectionId = 5,
+//                    CourseName = "Logic",
+//                    Timeslots = new List<Timeslot>
+//                    {
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,0,0,0,0,0,0,0,0,8,11,0,0},
+//                            Professor = "Emir"
+//                        },
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,0,0,0,0,8,11,0,0,0,0,0,0},
+//                            Professor = "Elton"
+//                        },
+//                    },
+//                },
+//                new Section
+//                {
+//                    SectionId = 6,
+//                    CourseName = "Elective",
+//                    Timeslots = new List<Timeslot>
+//                    {
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,0,0,8,11,0,0,0,0,0,0,0,0},
+//                            Professor = "Emir"
+//                        },
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,0,0,0,0,11,14,0,0,0,0,0,0},
+//                            Professor = "Emir"
+//                        },
+//                        new Timeslot
+//                        {
+//                            ClassTime = new[] {0,0,0,0,0,0,0,0,8,11,0,0,0,0},
+//                            Professor = "Elton"
+//                        },
+//                    },
+//                },
+//            };
 
             Restriction dummyRestriction = new Restriction
             {

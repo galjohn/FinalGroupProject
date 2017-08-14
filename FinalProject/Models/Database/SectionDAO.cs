@@ -15,11 +15,6 @@ namespace FinalProject.Models.Database
             db.ExecuteSql(sql);
         }
 
-        public static List<Section> GetStudentSections(string username)
-        {
-            return null;
-        }
-        
         public static Section GetSection(int id)
         {
             var db = ScheduleDB.GetInstance();
@@ -41,14 +36,13 @@ namespace FinalProject.Models.Database
             return null;
         }
 
-        public static List<Section> GetSections(string professor)
+        public static List<Section> GetSections()
         {
             var sections = new List<Section>();
             var db = ScheduleDB.GetInstance();
             var results =
                 db.ExecuteSelectSql("SELECT * " +
-                                    "FROM Sections " +
-                                    "WHERE Timeslot LIKE '%Professor%' ");
+                                    "FROM Sections");
 
             while (results.Read())
             {
@@ -61,7 +55,6 @@ namespace FinalProject.Models.Database
                 };
 
                 sections.Add(section);
-
             }
 
             return sections;
