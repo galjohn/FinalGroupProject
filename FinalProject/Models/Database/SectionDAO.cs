@@ -15,25 +15,30 @@ namespace FinalProject.Models.Database
             db.ExecuteSql(sql);
         }
 
-        public static Section GetSection(int id)
+        public static List<Section> GetStudentSections(int id)
         {
+            var studentSections = new List<Section>();
             var db = ScheduleDB.GetInstance();
             var sql =
                 string.Format("SELECT * " +
                               "FROM Sections " +
                               $"WHERE SectionID = {id}");
             var results = db.ExecuteSelectSql(sql);
-            if (results.HasRows)
+            if (results == null)
+            {
+                return null;
+            }
+            while (results.HasRows)
             {
                 results.Read();
-                return new Section
+                studentSections.Add(new Section
                 {
-                   SectionId = (int)results["SectionID"],
-                   CourseName = results["CourseName"].ToString(),
-                   Timeslots = GetTimeListFromJSON(results["Timeslots"].ToString())
-                };
+                    SectionId = (int) results["SectionID"],
+                    CourseName = results["CourseName"].ToString(),
+                    Timeslots = GetTimeListFromJSON(results["Timeslots"].ToString())
+                });
             }
-            return null;
+            return studentSections;
         }
 
         public static List<Section> GetSections(string professor)

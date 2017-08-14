@@ -19,10 +19,7 @@ namespace FinalProject.Controllers.api
                 SectionDAO.Create(section);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         private bool validateSection(Section section)
