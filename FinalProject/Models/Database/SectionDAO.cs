@@ -40,6 +40,27 @@ namespace FinalProject.Models.Database
             return null;
         }
 
+        public static Section GetSection(int id)
+        {
+            var db = ScheduleDB.GetInstance();
+            var sql =
+                string.Format("SELECT * " +
+                              "FROM Sections " +
+                              $"WHERE SectionID = '{id}'");
+            var results = db.ExecuteSelectSql(sql);
+            if (results.HasRows)
+            {
+                results.Read();
+                return new Section
+                {
+                    SectionId = (int)results["SectionID"],
+                    CourseName = results["CourseName"].ToString(),
+                    Timeslots = GetTimeListFromJSON(results["Timeslots"].ToString())
+                };
+            }
+            return null;
+        }
+
         public static List<Section> GetSections(string professor)
         {
             var sections = new List<Section>();
