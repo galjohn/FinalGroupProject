@@ -25,8 +25,8 @@ namespace FinalProject.Controllers
                 {
                     if (student.Password == result.Password)
                     {
-                        Response.SetCookie(new HttpCookie("UserID", result.StudentId.ToString()));
-                        Response.SetCookie(new HttpCookie("Name", (result.FirstName.ToString() + " " + result.LastName.ToString())));
+                        Response.SetCookie(new HttpCookie("UserID", result.Username));
+                        Response.SetCookie(new HttpCookie("Name", result.FirstName + " " + result.LastName));
                         return RedirectToAction("Home", "Student");
                     }
                 }
