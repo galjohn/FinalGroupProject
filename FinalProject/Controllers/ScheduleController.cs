@@ -37,16 +37,6 @@ namespace FinalProject.Controllers
                             ClassTime = new[] {0,0,0,0,0,0,0,0,11,12,11,20,10,12},
                             Professor = "Joao"
                         },
-                       /* new Timeslot
-                        {
-                            ClassTime = new[] {0,0,0,0,14,16,0,0,12,14,0,0,0,0},
-                            Professor = "John"
-                        },
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,12,14,0,0,0,0,9,11,0,0,0,0},
-                            Professor = "John"
-                        },*/
                     },
                 },
                 new Section
@@ -70,21 +60,6 @@ namespace FinalProject.Controllers
                             ClassTime = new[] {0,0,0,0,16,17,0,0,0,0,0,0,0,0},
                             Professor = "James"
                         },
-                        /*new Timeslot
-                        {
-                            ClassTime = new[] {3,4,0,0,0,0,0,0,0,0,0,0,0,0},
-                            Professor = "James"
-                        },
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,10,12,0,0,8,12,0,0,0,0,0,0},
-                            Professor = "James"
-                        },
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,8,12,12,14,0,0,0,0,0,0,0,0},
-                            Professor = "Joao"
-                        },*/
                     },
 
                 },
@@ -109,21 +84,6 @@ namespace FinalProject.Controllers
                             ClassTime = new[] {7,8,0,0,0,0,0,0,0,0,0,0,0,0},
                             Professor = "John"
                         },
-                        /*new Timeslot
-                        {
-                            ClassTime = new[] {0,0,14,16,0,0,16,18,0,0,0,0,0,0},
-                            Professor = "John"
-                        },
-                        new Timeslot
-                        {
-                            ClassTime = new[] {4,6,0,0,0,0,0,0,0,0,0,0,0,0},
-                            Professor = "John"
-                        },
-                        new Timeslot
-                        {
-                            ClassTime = new[] {0,0,0,0,10,12,16,18,0,0,0,0,0,0},
-                            Professor = "Joao"
-                        },*/
                     },
 
                 }
