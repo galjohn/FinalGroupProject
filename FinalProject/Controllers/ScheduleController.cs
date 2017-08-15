@@ -157,7 +157,7 @@ namespace FinalProject.Controllers
 //                },
 //            };
 
-            var dummyRestriction = RestrictionDAO.GetRestriction("galjohn");
+            var dummyRestriction = RestrictionDAO.GetRestriction(cookie);
 //            Restriction dummyRestriction = new Restriction
 //            {
 //                StudentId = "galjohn",
