@@ -14,7 +14,7 @@ namespace FinalProject.Models.Database
             //John's Connection String
             //_connection = new SqlConnection(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ScheduleDB;MultipleActiveResultSets=true");
             // Jamie's Connection String
-            //_connection = new SqlConnection(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ScheduleDB;Data Source=LEMON-LAPTOP;MultipleActiveResultSets=true");
+            _connection = new SqlConnection(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ScheduleDB;Data Source=LEMON-LAPTOP;MultipleActiveResultSets=true");
             //Joao's Connection String
             _connection = new SqlConnection(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ScheduleDB;Data Source=(localdb)\MSSQLLocalDB;MultipleActiveResultSets=true");
         }
