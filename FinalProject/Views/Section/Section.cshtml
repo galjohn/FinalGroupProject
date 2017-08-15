@@ -56,7 +56,7 @@
             }
             var day = parseInt($(selects).get(0).value);
             var stime = parseInt($(selects).get(1).value);
-            var duration = parseInt($(selects).get(2).value);
+            var duration = parseInt($(selects).get(2).value) + stime;
             var timeslot = new Timeslot();
             timeslot.ClassTime[day] = stime;
             timeslot.ClassTime[day + 1] = duration;
