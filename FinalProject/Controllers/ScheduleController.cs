@@ -157,25 +157,27 @@ namespace FinalProject.Controllers
 //                },
 //            };
 
-            Restriction dummyRestriction = new Restriction
-            {
-                NoGapsBiggerThanOneHour = false,
-                NoGaps = false,
-                NoProfessorX = new List<string>() { "John", "Elton" },
-                Timeslots = new List<Timeslot>
-                {
-                    new Timeslot
-                    {
-                        ClassTime = new[] {0,0,0,0,8,20,0,0,0,0,0,0,0,0}
-                    },
-
-                    /*
-                    new Timeslot
-                    {
-                        ClassTime = new[] {7,9,0,0,0,0,0,0,0,0,0,0,0,0}
-                    }*/
-                }
-            };
+            var dummyRestriction = RestrictionDAO.GetRestriction("galjohn");
+//            Restriction dummyRestriction = new Restriction
+//            {
+//                StudentId = "galjohn",
+//                NoGapsBiggerThanOneHour = false,
+//                NoGaps = false,
+//                NoProfessorX = new List<string>() { "John", "Elton" },
+//                Timeslots = new List<Timeslot>
+//                {
+//                    new Timeslot
+//                    {
+//                        ClassTime = new[] {0,0,0,0,8,20,0,0,0,0,0,0,0,0}
+//                    },
+//
+//                    /*
+//                    new Timeslot
+//                    {
+//                        ClassTime = new[] {7,9,0,0,0,0,0,0,0,0,0,0,0,0}
+//                    }*/
+//                }
+//            };
 
             GenerateSchedules gs = new GenerateSchedules();
 

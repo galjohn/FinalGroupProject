@@ -109,16 +109,16 @@ namespace FinalProject.Models
                 }
             }
 
-            if (restricion.NoProfessorX.Count > 0)
-            {
-                foreach (var teacher in restricion.NoProfessorX)
-                {
-                    if (!CheckForTeacher(schedule, teacher))
-                    {
-                        return false;
-                    }
-                }
-            }
+//            if (restricion.NoProfessorX.Count > 0)
+//            {
+//                foreach (var teacher in restricion.NoProfessorX)
+//                {
+//                    if (!CheckForTeacher(schedule, teacher))
+//                    {
+//                        return false;
+//                    }
+//                }
+//            }
 
             if (restricion.Timeslots.Count > 0)
             {
